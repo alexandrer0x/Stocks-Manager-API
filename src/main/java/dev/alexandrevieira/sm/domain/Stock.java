@@ -1,29 +1,50 @@
 package dev.alexandrevieira.sm.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public class Stock {
-	
-	@Getter
+import org.hibernate.annotations.NaturalId;
+
+@Entity
+public class Stock implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Getter @Setter
+	@NaturalId
+	@Column(unique=true)
 	private String ticker;
 	
-	@Getter @Setter
 	private String company;
 	
-	@Getter @Setter
 	private double price;
 	
-	@Getter @Setter
 	private double previousClosePrice;
 	
-	@Getter @Setter
 	private Date lastUpdated;
+	
+	public Stock() {
+		
+	}
+	
+	public Stock(Long id, String ticker, String company, double price, double previousClosePrice, Date lastUpdated) {
+		super();
+		this.id = id;
+		this.ticker = ticker;
+		this.company = company;
+		this.price = price;
+		this.previousClosePrice = previousClosePrice;
+		this.lastUpdated = lastUpdated;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -48,6 +69,64 @@ public class Stock {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Stock [id=" + id + ", ticker=" + ticker + ", company=" + company + ", price=" + price
+				+ ", previousClosePrice=" + previousClosePrice + ", lastUpdated=" + lastUpdated + "]";
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTicker() {
+		return ticker;
+	}
+
+	public void setTicker(String ticker) {
+		this.ticker = ticker;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public double getPreviousClosePrice() {
+		return previousClosePrice;
+	}
+
+	public void setPreviousClosePrice(double previousClosePrice) {
+		this.previousClosePrice = previousClosePrice;
+	}
+
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 	
