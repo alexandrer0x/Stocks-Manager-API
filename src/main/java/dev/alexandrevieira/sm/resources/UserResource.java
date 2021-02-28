@@ -20,8 +20,7 @@ public class UserResource {
 	public ResponseEntity<?> getUser(@PathVariable Long id) {
 		User user = userService.getUser(id);
 		
-		if(user == null)
-			return ResponseEntity.notFound().build();
+		
 		
 		return ResponseEntity.ok().body(user);
 	}

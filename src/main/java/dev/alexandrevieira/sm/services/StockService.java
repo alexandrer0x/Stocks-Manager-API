@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import dev.alexandrevieira.sm.domain.Stock;
 import dev.alexandrevieira.sm.repositories.StockRepository;
+import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class StockService {
@@ -25,6 +26,7 @@ public class StockService {
 	
 	public Stock getStock(String ticker) {
 		Optional<Stock> opt = stockRepository.findByTicker(ticker);
-		return opt.orElse(null);
+		return opt.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Ticker: " + ticker + ", Tipo: " + Stock.class.getName()));
 	}
 }

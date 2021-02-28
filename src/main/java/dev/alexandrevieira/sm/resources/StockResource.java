@@ -20,11 +20,7 @@ public class StockResource {
 	public ResponseEntity<?> list(@PathVariable String ticker) {
 		
 		Stock stock = stockService.getStock(ticker);
-		
-		if(stock == null) {
-			return ResponseEntity.notFound().build();
-		}
-		
+			
 		return ResponseEntity.ok().body(stock);
 	}
 }
