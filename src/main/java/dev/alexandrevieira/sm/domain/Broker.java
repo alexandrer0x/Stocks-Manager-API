@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -23,9 +24,12 @@ public class Broker implements Serializable {
 	
 	
 	@ManyToMany(mappedBy = "brokers")
-	@Column(unique = true)
 	@JsonBackReference
 	private List<User> users = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "broker")
+	@JsonBackReference
+	private List<Position> positions;
 	
 	public Broker() {
 		

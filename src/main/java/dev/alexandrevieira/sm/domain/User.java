@@ -32,14 +32,15 @@ public class User implements Serializable {
 	@JsonManagedReference
 	private List<Position> positions = new ArrayList<>();
 	
+	
 	@ManyToMany
-	@JoinTable(name="user_stock",
+	@JoinTable(name="favorite_stock",
 		joinColumns = @JoinColumn(name = "user_id"),
 		inverseJoinColumns = @JoinColumn(name = "stock_id"))
 	
 	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonManagedReference
-	private List<Stock> stocks = new ArrayList<>();
+	private List<Stock> favoriteStocks = new ArrayList<>();
 	
 	
 	@ManyToMany
@@ -62,9 +63,7 @@ public class User implements Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
-
-
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -101,14 +100,26 @@ public class User implements Serializable {
 
 
 
-	public List<Stock> getStocks() {
-		return stocks;
+	public List<Position> getPositions() {
+		return positions;
 	}
 
 
 
-	public void setStocks(List<Stock> stocks) {
-		this.stocks = stocks;
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
+
+
+
+	public List<Stock> getFavoriteStocks() {
+		return favoriteStocks;
+	}
+
+
+
+	public void setFavoriteStocks(List<Stock> favoriteStocks) {
+		this.favoriteStocks = favoriteStocks;
 	}
 
 
@@ -121,16 +132,6 @@ public class User implements Serializable {
 
 	public void setBrokers(List<Broker> brokers) {
 		this.brokers = brokers;
-	}
-	
-	public List<Position> getPositions() {
-		return positions;
-	}
-
-
-
-	public void setPositions(List<Position> positions) {
-		this.positions = positions;
 	}
 
 
@@ -171,6 +172,7 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", positions=" + positions
-				+ ", stocks=" + stocks + ", brokers=" + brokers + "]";
-	}	
+				+ ", favoriteStocks=" + favoriteStocks + ", brokers=" + brokers + "]";
+	}
+		
 }

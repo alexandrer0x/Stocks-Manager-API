@@ -65,9 +65,9 @@ public class DBService {
 		user2.getBrokers().addAll(Arrays.asList(broker1, broker3));
 		user3.getBrokers().addAll(Arrays.asList(broker2, broker3));
 
-		user1.getStocks().addAll(Arrays.asList(stock1, stock2, stock3, stock4, stock5));
-		user2.getStocks().addAll(Arrays.asList(stock1, stock3, stock5));
-		user3.getStocks().addAll(Arrays.asList(stock2, stock4));
+		user1.getFavoriteStocks().addAll(Arrays.asList(stock1, stock2, stock3, stock4, stock5));
+		user2.getFavoriteStocks().addAll(Arrays.asList(stock1, stock3, stock5));
+		user3.getFavoriteStocks().addAll(Arrays.asList(stock2, stock4));
 
 		broker1.getUsers().addAll(Arrays.asList(user1, user2));
 		broker2.getUsers().addAll(Arrays.asList(user1, user3));

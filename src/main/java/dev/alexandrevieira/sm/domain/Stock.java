@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.NaturalId;
 
@@ -25,20 +27,27 @@ public class Stock implements Serializable {
 	private Long id;
 	
 	@NaturalId
-	@Column(unique=true)
+	@Column(nullable=false)
 	private String ticker;
+	
 	
 	private String company;
 	
+	@Column(nullable=true)
 	private double price;
 	
+	@Column(nullable=true)
 	private double previousClosePrice;
 	
 	private Date lastUpdated;
 	
-	@ManyToMany(mappedBy="stocks")
+	@ManyToMany(mappedBy="favoriteStocks")
 	@JsonBackReference
 	private List<User> users = new ArrayList<>();
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
+	@JsonBackReference
+	private List<Position> positions = new ArrayList<>();
 	
 	public Stock() {
 		

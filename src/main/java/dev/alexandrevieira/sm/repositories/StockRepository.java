@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import dev.alexandrevieira.sm.domain.Stock;
 
 @Repository
-public interface StockRepository extends JpaRepository <Stock, Integer> {
-	public Optional<Stock> findById(Long id);
+public interface StockRepository extends JpaRepository <Stock, Long> {
 	public Optional<Stock> findByTicker(String tikcer);
 }
