@@ -27,7 +27,7 @@ public class PositionService {
 	}
 	
 	public List<Position> getUserPositions(Long userId) {
-		List<Position> positions = positionRepository.findByUser(new User(userId, null, null));
+		List<Position> positions = positionRepository.findByUser(new User(userId, null, null, null, null));
 		
 		if(positions == null || positions.isEmpty())
 			throw new ObjectNotFoundException(

@@ -29,7 +29,11 @@ public class Broker implements Serializable {
 	
 	@OneToMany(mappedBy = "broker")
 	@JsonBackReference
-	private List<Position> positions;
+	private List<Position> positions = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "broker")
+	@JsonBackReference
+	private List<PositionTrade> positionTrades = new ArrayList<>();
 	
 	public Broker() {
 		
@@ -64,6 +68,22 @@ public class Broker implements Serializable {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+	
+	public List<Position> getPositions() {
+		return positions;
+	}
+
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
+	
+	public List<PositionTrade> getPositionTrades() {
+		return positionTrades;
+	}
+
+	public void setPositionTrades(List<PositionTrade> positionTrades) {
+		this.positionTrades = positionTrades;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -96,8 +116,9 @@ public class Broker implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Broker [id=" + id + ", name=" + name + ", users=" + users + ", getId()=" + getId() + ", getName()="
-				+ getName() + ", getUsers()=" + getUsers() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
-				+ ", toString()=" + super.toString() + "]";
+		return "Broker [id=" + id + ", name=" + name + ", users=" + users + ", positions=" + positions
+				+ ", positionTrades=" + positionTrades + "]";
 	}
+
+	
 }

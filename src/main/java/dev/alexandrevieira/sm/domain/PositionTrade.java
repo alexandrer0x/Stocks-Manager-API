@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import dev.alexandrevieira.sm.domain.enums.TradeType;
+
 @Entity
 public class PositionTrade implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,23 +25,24 @@ public class PositionTrade implements Serializable {
 	private Long id;
 	
 	@Column(nullable=false)
-	private Character type;
+	private int type;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "user_id", insertable = false, updatable = false)
+	@JoinColumn(name = "user_id")
 	@JsonIgnore
 	private User user;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "stock_id", insertable = false, updatable = false)
+	@JoinColumn(name = "stock_id")
 	@JsonManagedReference
 	private Stock stock;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "broker_id", insertable = false, updatable = false)
+	@JoinColumn(name = "broker_id")
 	@JsonManagedReference
 	private Broker broker;
 	
+	@Column(nullable=false)
 	private Date date;
 	
 	private int amount;
@@ -54,11 +57,11 @@ public class PositionTrade implements Serializable {
 		
 	}
 
-	public PositionTrade(Long id, Character type, User user, Stock stock, Broker broker, Date date, int amount,
+	public PositionTrade(Long id, TradeType type, User user, Stock stock, Broker broker, Date date, int amount,
 			double price, double tradeFee, double tradeResult) {
 		super();
 		this.id = id;
-		this.type = type;
+		this.type = type.getCod();
 		this.user = user;
 		this.stock = stock;
 		this.broker = broker;
@@ -77,12 +80,12 @@ public class PositionTrade implements Serializable {
 		this.id = id;
 	}
 
-	public Character getType() {
-		return type;
+	public TradeType getType() {
+		return TradeType.toEnum(this.type);
 	}
 
-	public void setType(Character type) {
-		this.type = type;
+	public void setType(TradeType type) {
+		this.type = type.getCod();
 	}
 
 	public User getUser() {
@@ -148,6 +151,8 @@ public class PositionTrade implements Serializable {
 	public void setTradeResult(double tradeResult) {
 		this.tradeResult = tradeResult;
 	}
+	
+	
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -180,7 +185,7 @@ public class PositionTrade implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PositionTrade [id=" + id + ", type=" + type + ", user=" + user + ", stock=" + stock + ", broker="
+		return "PositionTrade [id=" + id + ", type=" + this.getType().getDescription() + ", user=" + user + ", stock=" + stock + ", broker="
 				+ broker + ", date=" + date + ", amount=" + amount + ", price=" + price + ", tradeFee=" + tradeFee
 				+ ", tradeResult=" + tradeResult + "]";
 	}

@@ -39,9 +39,9 @@ public class Position {
 		
 	}
 
-	public Position(PositionId id, User user, Stock stock, Broker broker, int amount, double avgPrice) {
+	public Position(User user, Stock stock, Broker broker, int amount, double avgPrice) {
 		super();
-		this.id = id;
+		this.id = new PositionId(user.getId(), broker.getId(), stock.getId());
 		this.user = user;
 		this.stock = stock;
 		this.broker = broker;
@@ -135,9 +135,6 @@ public class Position {
 	@Override
 	public String toString() {
 		return "Position [id=" + id + ", user=" + user + ", stock=" + stock + ", broker=" + broker + ", amount="
-				+ amount + ", avgPrice=" + avgPrice + ", getId()=" + getId() + ", getUser()=" + getUser()
-				+ ", getStock()=" + getStock() + ", getBroker()=" + getBroker() + ", getAmount()=" + getAmount()
-				+ ", getAvgPrice()=" + getAvgPrice() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
-				+ ", toString()=" + super.toString() + "]";
+				+ amount + ", avgPrice=" + avgPrice + "]";
 	}
 }

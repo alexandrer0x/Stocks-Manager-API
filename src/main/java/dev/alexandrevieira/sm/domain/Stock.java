@@ -49,6 +49,10 @@ public class Stock implements Serializable {
 	@JsonBackReference
 	private List<Position> positions = new ArrayList<>();
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
+	@JsonBackReference
+	private List<PositionTrade> positionTrades = new ArrayList<>();
+	
 	public Stock() {
 		
 	}
@@ -121,6 +125,22 @@ public class Stock implements Serializable {
 		this.users = users;
 	}
 
+	public List<Position> getPositions() {
+		return positions;
+	}
+
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
+
+	public List<PositionTrade> getPositionTrades() {
+		return positionTrades;
+	}
+
+	public void setPositionTrades(List<PositionTrade> positionTrades) {
+		this.positionTrades = positionTrades;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -154,10 +174,7 @@ public class Stock implements Serializable {
 	public String toString() {
 		return "Stock [id=" + id + ", ticker=" + ticker + ", company=" + company + ", price=" + price
 				+ ", previousClosePrice=" + previousClosePrice + ", lastUpdated=" + lastUpdated + ", users=" + users
-				+ ", getId()=" + getId() + ", getTicker()=" + getTicker() + ", getCompany()=" + getCompany()
-				+ ", getPrice()=" + getPrice() + ", getPreviousClosePrice()=" + getPreviousClosePrice()
-				+ ", getLastUpdated()=" + getLastUpdated() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", positions=" + positions + ", positionTrades=" + positionTrades + "]";
 	}
 
 	
