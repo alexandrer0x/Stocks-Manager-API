@@ -3,6 +3,8 @@ package dev.alexandrevieira.sm.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class StockService {
 	}
 
 	public Stock find(Long id) {
+		//Não remover o lançamento de exceção. Os métodos update() e delete() fazem uso dele
+		//Em caso de mudanças, reformular o tratamento de exceção
 		Optional<Stock> opt = stockRepository.findById(id);
 
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
@@ -42,5 +46,12 @@ public class StockService {
 		//chamando find, pois caso não exista o ele já lançará a exceção
 		find(stock.getId());
 		return stockRepository.save(stock);
+	}
+	
+	@Transactional
+	public void delete(String ticker) {
+		//chamando find, pois caso não exista o ele já lançará a exceção
+		find(ticker);
+		stockRepository.deleteByTicker(ticker);
 	}
 }

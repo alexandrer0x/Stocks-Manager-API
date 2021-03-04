@@ -50,4 +50,10 @@ public class StockResource {
 		stock = stockService.update(stock);	
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(method=RequestMethod.DELETE, value="/{ticker}")
+	public ResponseEntity<Stock> delete(@PathVariable String ticker) {
+		stockService.delete(ticker);
+		return ResponseEntity.noContent().build();
+	}
 }

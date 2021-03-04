@@ -10,4 +10,6 @@ import dev.alexandrevieira.sm.domain.Stock;
 @Repository
 public interface StockRepository extends JpaRepository <Stock, Long> {
 	public Optional<Stock> findByTicker(String tikcer);
+	
+	public Long deleteByTicker(String ticker);
 }
