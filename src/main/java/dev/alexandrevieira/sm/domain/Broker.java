@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Broker implements Serializable {
@@ -27,15 +27,15 @@ public class Broker implements Serializable {
 	
 	
 	@ManyToMany(mappedBy = "brokers")
-	@JsonBackReference
+	@JsonIgnore
 	private List<User> users = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.broker")
-	@JsonBackReference
+	@JsonIgnore
 	private Set<Position> positions = new HashSet<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "broker")
-	@JsonBackReference
+	@JsonIgnore
 	private List<PositionTrade> positionTrades = new ArrayList<>();
 	
 	public Broker() {

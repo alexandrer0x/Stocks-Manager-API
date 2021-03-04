@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class User implements Serializable {
@@ -46,11 +45,9 @@ public class User implements Serializable {
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.user")
-	@JsonManagedReference
 	private Set<Position> positions = new HashSet<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonManagedReference
 	private List<PositionTrade> positionTrades = new ArrayList<>();
 	
 	
@@ -60,7 +57,6 @@ public class User implements Serializable {
 		inverseJoinColumns = @JoinColumn(name = "stock_id"))
 	
 	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonManagedReference
 	private List<Stock> favoriteStocks = new ArrayList<>();
 	
 	
@@ -69,7 +65,6 @@ public class User implements Serializable {
 			joinColumns = @JoinColumn(name= "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "broker_id"))
 	
-	@JsonManagedReference
 	private List<Broker> brokers = new ArrayList<>();
 
 	public User() {

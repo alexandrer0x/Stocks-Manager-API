@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import dev.alexandrevieira.sm.domain.enums.TradeType;
 
@@ -34,12 +33,10 @@ public class PositionTrade implements Serializable {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "stock_id")
-	@JsonManagedReference
 	private Stock stock;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "broker_id")
-	@JsonManagedReference
 	private Broker broker;
 	
 	@Column(nullable=false)

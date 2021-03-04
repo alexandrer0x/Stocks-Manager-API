@@ -7,7 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Embeddable
 public class PositionPK implements Serializable {
@@ -20,12 +19,10 @@ public class PositionPK implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "broker_id")
-	@JsonManagedReference
 	private Broker broker;
 	
 	@ManyToOne
 	@JoinColumn(name = "stock_id")
-	@JsonManagedReference
 	private Stock stock;
 
 	public PositionPK() {

@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.NaturalId;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Stock implements Serializable {
@@ -44,15 +44,15 @@ public class Stock implements Serializable {
 	private Date lastUpdated;
 	
 	@ManyToMany(mappedBy="favoriteStocks")
-	@JsonBackReference
+	@JsonIgnore
 	private List<User> users = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.stock")
-	@JsonBackReference
+	@JsonIgnore
 	private Set<Position> positions = new HashSet<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
-	@JsonBackReference
+	@JsonIgnore
 	private List<PositionTrade> positionTrades = new ArrayList<>();
 	
 	public Stock() {
