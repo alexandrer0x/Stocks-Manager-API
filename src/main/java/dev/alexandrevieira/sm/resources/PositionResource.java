@@ -22,14 +22,14 @@ public class PositionResource {
 	PositionService positionService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> find(@RequestBody PositionPK id) {
+	public ResponseEntity<Position> find(@RequestBody PositionPK id) {
 		Position position = positionService.find(id.getUser().getId(), id.getBroker().getId(), id.getStock().getId());
 		
 		return ResponseEntity.ok().body(position);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value ="/user/{userId}")
-	public ResponseEntity<?> findByUser(@PathVariable Long userId) {
+	public ResponseEntity<List<Position>> findByUser(@PathVariable Long userId) {
 		List<Position> positions = positionService.findByUser(userId);
 		
 		return ResponseEntity.ok().body(positions);

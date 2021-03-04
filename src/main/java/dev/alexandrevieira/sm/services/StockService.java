@@ -14,22 +14,33 @@ import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 public class StockService {
 	@Autowired
 	private StockRepository stockRepository;
-	
-	public List<Stock> getStocks() {
+
+	public List<Stock> findAll() {
 		return stockRepository.findAll();
 	}
-	
+
 	public Stock find(Long id) {
 		Optional<Stock> opt = stockRepository.findById(id);
-		
+
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Stock.class.getName()));
 	}
-	
+
 	public Stock find(String ticker) {
 		Optional<Stock> opt = stockRepository.findByTicker(ticker);
-		
+
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Ticker: " + ticker + ", Tipo: " + Stock.class.getName()));
+	}
+
+	public Stock insert(Stock stock) {
+		stock.setId(null);
+		return stockRepository.save(stock);
+	}
+	
+	public Stock update(Stock stock) {
+		//chamando find, pois caso não exista o ele já lançará a exceção
+		find(stock.getId());
+		return stockRepository.save(stock);
 	}
 }

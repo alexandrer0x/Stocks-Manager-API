@@ -25,7 +25,7 @@ public class BrokerResource {
 		return ResponseEntity.ok().body(broker);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<?> find(@PathVariable Long id) {
 		Broker broker = brokerService.find(id);
 		return ResponseEntity.ok().body(broker);

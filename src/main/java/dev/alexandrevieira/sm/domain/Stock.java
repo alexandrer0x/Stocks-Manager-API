@@ -28,7 +28,7 @@ public class Stock implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NaturalId
+	@NaturalId(mutable = true)
 	@Column(nullable=false)
 	private String ticker;
 	
