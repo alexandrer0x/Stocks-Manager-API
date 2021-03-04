@@ -16,11 +16,11 @@ public class BrokerService {
 	@Autowired
 	private BrokerRepository brokerRepository;
 	
-	public List<Broker> getBrokers() {
+	public List<Broker> findAll() {
 		return brokerRepository.findAll();
 	}
 	
-	public Broker getBroker(Long id) {
+	public Broker find(Long id) {
 		Optional<Broker> opt = brokerRepository.findById(id);
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Broker.class.getName()));

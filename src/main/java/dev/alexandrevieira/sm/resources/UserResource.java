@@ -17,8 +17,8 @@ public class UserResource {
 	private UserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public ResponseEntity<?> getUser(@PathVariable Long id) {
-		User user = userService.getUser(id);
+	public ResponseEntity<?> find(@PathVariable Long id) {
+		User user = userService.find(id);
 		
 		
 		

@@ -14,7 +14,7 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public User getUser(Long id) {
+	public User find(Long id) {
 		Optional<User> opt = userRepository.findById(id);
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));

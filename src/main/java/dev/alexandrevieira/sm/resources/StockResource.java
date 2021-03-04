@@ -17,9 +17,9 @@ public class StockResource {
 	private StockService stockService; 
 	
 	@RequestMapping(method=RequestMethod.GET, value="/{ticker}")
-	public ResponseEntity<?> list(@PathVariable String ticker) {
+	public ResponseEntity<?> find(@PathVariable String ticker) {
 		
-		Stock stock = stockService.getStock(ticker);
+		Stock stock = stockService.find(ticker);
 			
 		return ResponseEntity.ok().body(stock);
 	}

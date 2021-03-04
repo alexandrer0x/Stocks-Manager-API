@@ -20,14 +20,14 @@ public class BrokerResource {
 	private BrokerService brokerService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> getBrokers() {
-		List<Broker> broker = brokerService.getBrokers();
+	public ResponseEntity<?> findAll() {
+		List<Broker> broker = brokerService.findAll();
 		return ResponseEntity.ok().body(broker);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> getBroker(@PathVariable Long id) {
-		Broker broker = brokerService.getBroker(id);
+	public ResponseEntity<?> find(@PathVariable Long id) {
+		Broker broker = brokerService.find(id);
 		return ResponseEntity.ok().body(broker);
 	}
 }

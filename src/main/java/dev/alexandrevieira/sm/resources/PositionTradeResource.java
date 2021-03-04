@@ -17,8 +17,8 @@ public class PositionTradeResource {
 	PositionTradeService positionTradeService;
 	
 	@RequestMapping(value = "/{id}")
-	public ResponseEntity<?> getPositionTrade(@PathVariable Long id) {
-		PositionTrade trade = positionTradeService.getPositionTrade(id);
+	public ResponseEntity<?> find(@PathVariable Long id) {
+		PositionTrade trade = positionTradeService.find(id);
 		
 		return ResponseEntity.ok().body(trade);
 	}

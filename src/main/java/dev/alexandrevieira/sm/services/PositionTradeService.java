@@ -15,7 +15,7 @@ public class PositionTradeService {
 	@Autowired
 	private PositionTradeRepository positionTradeRepository;
 	
-	public PositionTrade getPositionTrade(Long id) {
+	public PositionTrade find(Long id) {
 		Optional<PositionTrade> opt =  positionTradeRepository.findById(id);
 		
 		return opt.orElseThrow(() -> new ObjectNotFoundException(

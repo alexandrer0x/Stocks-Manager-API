@@ -19,14 +19,14 @@ public class StockService {
 		return stockRepository.findAll();
 	}
 	
-	public Stock getStock(Long id) {
+	public Stock find(Long id) {
 		Optional<Stock> opt = stockRepository.findById(id);
 		
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Stock.class.getName()));
 	}
 	
-	public Stock getStock(String ticker) {
+	public Stock find(String ticker) {
 		Optional<Stock> opt = stockRepository.findByTicker(ticker);
 		
 		return opt.orElseThrow(() -> new ObjectNotFoundException(

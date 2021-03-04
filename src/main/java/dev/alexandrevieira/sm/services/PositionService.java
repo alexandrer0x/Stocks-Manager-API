@@ -18,7 +18,7 @@ public class PositionService {
 	@Autowired
 	private PositionRepository positionRepository;
 	
-	public Position getPostion(Long userId, Long brokerId, Long stockId) {
+	public Position find(Long userId, Long brokerId, Long stockId) {
 		PositionPK positionPK = new PositionPK(userId, brokerId, stockId);
 		Optional<Position> opt = positionRepository.findById(positionPK);
 		
@@ -26,7 +26,7 @@ public class PositionService {
 				"Objeto não econtrado! Id: " + positionPK + ", Tipo: " + Position.class.getName()));
 	}
 	
-	public List<Position> getUserPositions(Long userId) {
+	public List<Position> findByUser(Long userId) {
 		List<Position> positions = positionRepository.findByIdUser(new User(userId, null, null, null, null));
 		
 		if(positions == null || positions.isEmpty())
