@@ -1,13 +1,16 @@
 package dev.alexandrevieira.sm.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Position {
-	
+public class Position implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@EmbeddedId
 	@JsonIgnore
 	private PositionPK id;

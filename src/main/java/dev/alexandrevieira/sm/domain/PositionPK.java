@@ -22,7 +22,7 @@ public class PositionPK implements Serializable {
 	private Broker broker;
 	
 	@ManyToOne
-	@JoinColumn(name = "stock_id")
+	@JoinColumn(name = "stock_ticker")
 	private Stock stock;
 
 	public PositionPK() {
@@ -32,18 +32,18 @@ public class PositionPK implements Serializable {
 	public PositionPK(User user, Broker broker, Stock stock) {
 		super();
 		this.user = user;
-		this.broker = broker;
+		this.broker = broker;;
 		this.stock = stock;
 	}
 	
-	public PositionPK(Long userId, Long brokerId, Long stockId) {
+	public PositionPK(Long userId, Long brokerId, String stockTicker) {
 		super();
 		this.user = new User();
 		this.user.setId(userId);
 		this.broker = new Broker();
 		this.broker.setId(brokerId);
 		this.stock = new Stock();
-		this.stock.setId(stockId);;
+		this.stock.setTicker(stockTicker);;
 	}
 
 	public User getUser() {

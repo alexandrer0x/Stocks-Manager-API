@@ -39,14 +39,14 @@ public class StockResource {
 	public ResponseEntity<Void> insert(@RequestBody Stock stock) {
 		stock = stockService.insert(stock);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(stock.getId()).toUri();
+				.path("/{id}").buildAndExpand(stock.getTicker()).toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Stock stock) {
-		stock.setId(id);
+	@RequestMapping(method = RequestMethod.PUT, value = "/{ticker}")
+	public ResponseEntity<Void> update(@PathVariable String ticker, @RequestBody Stock stock) {
+		stock.setTicker(ticker);
 		stock = stockService.update(stock);	
 		return ResponseEntity.noContent().build();
 	}

@@ -18,8 +18,8 @@ public class PositionService {
 	@Autowired
 	private PositionRepository positionRepository;
 	
-	public Position find(Long userId, Long brokerId, Long stockId) {
-		PositionPK positionPK = new PositionPK(userId, brokerId, stockId);
+	public Position find(Long userId, Long brokerId, String stockTicker) {
+		PositionPK positionPK = new PositionPK(userId, brokerId, stockTicker);
 		Optional<Position> opt = positionRepository.findById(positionPK);
 		
 		return opt.orElseThrow(() -> new ObjectNotFoundException(

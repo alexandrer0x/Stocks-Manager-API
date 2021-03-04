@@ -32,7 +32,7 @@ public class PositionTrade implements Serializable {
 	private User user;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "stock_id")
+	@JoinColumn(name = "stock_ticker")
 	private Stock stock;
 	
 	@ManyToOne(optional = false)

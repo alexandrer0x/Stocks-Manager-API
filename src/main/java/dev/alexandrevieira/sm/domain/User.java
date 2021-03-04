@@ -54,7 +54,7 @@ public class User implements Serializable {
 	@ManyToMany
 	@JoinTable(name="favorite_stock",
 		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = "stock_id"))
+		inverseJoinColumns = @JoinColumn(name = "stock_ticker"))
 	
 	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	private List<Stock> favoriteStocks = new ArrayList<>();

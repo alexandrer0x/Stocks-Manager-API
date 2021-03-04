@@ -10,13 +10,9 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.NaturalId;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,10 +21,6 @@ public class Stock implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	
-	@NaturalId(mutable = true)
 	@Column(nullable=false)
 	private String ticker;
 	
@@ -59,9 +51,8 @@ public class Stock implements Serializable {
 		
 	}
 	
-	public Stock(Long id, String ticker, String company, double price, double previousClosePrice, Date lastUpdated) {
+	public Stock(String ticker, String company, double price, double previousClosePrice, Date lastUpdated) {
 		super();
-		this.id = id;
 		this.ticker = ticker;
 		this.company = company;
 		this.price = price;
@@ -70,14 +61,6 @@ public class Stock implements Serializable {
 	}
 
 
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getTicker() {
 		return ticker;
@@ -151,7 +134,7 @@ public class Stock implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((ticker == null) ? 0 : ticker.hashCode());
 		return result;
 	}
 
@@ -164,20 +147,19 @@ public class Stock implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Stock other = (Stock) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (ticker == null) {
+			if (other.ticker != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!ticker.equals(other.ticker))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Stock [id=" + id + ", ticker=" + ticker + ", company=" + company + ", price=" + price
-				+ ", previousClosePrice=" + previousClosePrice + ", lastUpdated=" + lastUpdated + ", users=" + users
-				+ ", positions=" + positions + ", positionTrades=" + positionTrades + "]";
+		return "Stock [ticker=" + ticker + ", company=" + company + ", price=" + price + ", previousClosePrice="
+				+ previousClosePrice + ", lastUpdated=" + lastUpdated + ", users=" + users + ", positions=" + positions
+				+ ", positionTrades=" + positionTrades + "]";
 	}
-
 	
 }

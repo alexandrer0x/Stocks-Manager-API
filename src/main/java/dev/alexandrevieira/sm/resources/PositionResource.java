@@ -23,7 +23,7 @@ public class PositionResource {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Position> find(@RequestBody PositionPK id) {
-		Position position = positionService.find(id.getUser().getId(), id.getBroker().getId(), id.getStock().getId());
+		Position position = positionService.find(id.getUser().getId(), id.getBroker().getId(), id.getStock().getTicker());
 		
 		return ResponseEntity.ok().body(position);
 	}
