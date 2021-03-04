@@ -56,10 +56,10 @@ public class DBService {
 
 		stockRepository.saveAll(Arrays.asList(stock1, stock2, stock3, stock4, stock5));
 
-		Position position1 = new Position(user1, stock2, broker1, 100, 13.21);
-		Position position2 = new Position(user1, stock4, broker1, 200, 14.33);
-		Position position3 = new Position(user1, stock5, broker3, 100, 13.21);
-		Position position4 = new Position(user1, stock2, broker1, 100, 15.27);
+		Position position1 = new Position(user1, broker1, stock2, 100, 13.21);
+		Position position2 = new Position(user1, broker1, stock4, 200, 14.33);
+		Position position3 = new Position(user1, broker3, stock5, 100, 13.21);
+		Position position4 = new Position(user1, broker1, stock2, 100, 15.27);
 
 		/*
 		 * user1.getBrokers().addAll(Arrays.asList(broker1, broker2));

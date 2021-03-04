@@ -2,7 +2,9 @@ package dev.alexandrevieira.sm.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,9 +45,9 @@ public class User implements Serializable {
 	private String password;
 	
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.user")
 	@JsonManagedReference
-	private List<Position> positions = new ArrayList<>();
+	private Set<Position> positions = new HashSet<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonManagedReference
@@ -123,11 +125,11 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public List<Position> getPositions() {
+	public Set<Position> getPositions() {
 		return positions;
 	}
 
-	public void setPositions(List<Position> positions) {
+	public void setPositions(Set<Position> positions) {
 		this.positions = positions;
 	}
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev.alexandrevieira.sm.domain.Position;
-import dev.alexandrevieira.sm.domain.PositionId;
+import dev.alexandrevieira.sm.domain.PositionPK;
 import dev.alexandrevieira.sm.domain.User;
 import dev.alexandrevieira.sm.repositories.PositionRepository;
 import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
@@ -19,15 +19,15 @@ public class PositionService {
 	private PositionRepository positionRepository;
 	
 	public Position getPostion(Long userId, Long brokerId, Long stockId) {
-		PositionId positionId = new PositionId(userId, brokerId, stockId);
-		Optional<Position> opt = positionRepository.findById(positionId);
+		PositionPK positionPK = new PositionPK(userId, brokerId, stockId);
+		Optional<Position> opt = positionRepository.findById(positionPK);
 		
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não econtrado! Id: " + positionId + ", Tipo: " + Position.class.getName()));
+				"Objeto não econtrado! Id: " + positionPK + ", Tipo: " + Position.class.getName()));
 	}
 	
 	public List<Position> getUserPositions(Long userId) {
-		List<Position> positions = positionRepository.findByUser(new User(userId, null, null, null, null));
+		List<Position> positions = positionRepository.findByIdUser(new User(userId, null, null, null, null));
 		
 		if(positions == null || positions.isEmpty())
 			throw new ObjectNotFoundException(

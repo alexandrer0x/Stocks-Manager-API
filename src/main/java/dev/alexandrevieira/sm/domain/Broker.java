@@ -2,8 +2,11 @@ package dev.alexandrevieira.sm.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,11 +30,11 @@ public class Broker implements Serializable {
 	@JsonBackReference
 	private List<User> users = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "broker")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.broker")
 	@JsonBackReference
-	private List<Position> positions = new ArrayList<>();
+	private Set<Position> positions = new HashSet<>();
 	
-	@OneToMany(mappedBy = "broker")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "broker")
 	@JsonBackReference
 	private List<PositionTrade> positionTrades = new ArrayList<>();
 	
@@ -69,11 +72,11 @@ public class Broker implements Serializable {
 		this.users = users;
 	}
 	
-	public List<Position> getPositions() {
+	public Set<Position> getPositions() {
 		return positions;
 	}
 
-	public void setPositions(List<Position> positions) {
+	public void setPositions(Set<Position> positions) {
 		this.positions = positions;
 	}
 	

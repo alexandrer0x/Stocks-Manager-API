@@ -2,93 +2,52 @@ package dev.alexandrevieira.sm.domain;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Position {
 	
 	@EmbeddedId
-	@JsonBackReference
-	private PositionId id;
-	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "user_id", insertable = false, updatable = false)
 	@JsonIgnore
-	private User user;
-	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "stock_id", insertable = false, updatable = false)
-	@JsonManagedReference
-	private Stock stock;
-	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "broker_id", insertable = false, updatable = false)
-	@JsonManagedReference
-	private Broker broker;
+	private PositionPK id;
 	
 	private int amount;
 	
-	private double avgPrice;
+	private double averageCost;
 	
 	public Position() {
 		
 	}
 
-	public Position(User user, Stock stock, Broker broker, int amount, double avgPrice) {
+	public Position(User user, Broker broker, Stock stock, int amount, double avgPrice) {
 		super();
-		this.id = new PositionId(user.getId(), broker.getId(), stock.getId());
-		this.user = user;
-		this.stock = stock;
-		this.broker = broker;
+		this.id = new PositionPK(user, broker, stock);
 		this.amount = amount;
-		this.avgPrice = avgPrice;
+		this.averageCost = avgPrice;
 	}
 
 
 
 	public double positionCost() {
-		return amount * avgPrice;
+		return amount * averageCost;
 	}
 	
 	public double positionValue() {
-		return amount * stock.getPrice();
+		return amount * id.getStock().getPrice();
 	}
-
-	public PositionId getId() {
-		return id;
-	}
-
-	public void setId(PositionId id) {
-		this.id = id;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Stock getStock() {
-		return stock;
-	}
-
-	public void setStock(Stock stock) {
-		this.stock = stock;
-	}
-
+	
 	public Broker getBroker() {
-		return broker;
+		return this.id.getBroker();
 	}
-
-	public void setBroker(Broker broker) {
-		this.broker = broker;
+	
+	public Stock getStock() {
+		return this.id.getStock();
+	}
+	
+	@JsonIgnore
+	public User getUser() {
+		return this.id.getUser();
 	}
 
 	public int getAmount() {
@@ -99,12 +58,12 @@ public class Position {
 		this.amount = amount;
 	}
 
-	public double getAvgPrice() {
-		return avgPrice;
+	public double getAverageCost() {
+		return averageCost;
 	}
 
-	public void setAvgPrice(double avgPrice) {
-		this.avgPrice = avgPrice;
+	public void setAverageCost(double averageCost) {
+		this.averageCost = averageCost;
 	}
 
 	@Override
@@ -134,7 +93,7 @@ public class Position {
 
 	@Override
 	public String toString() {
-		return "Position [id=" + id + ", user=" + user + ", stock=" + stock + ", broker=" + broker + ", amount="
-				+ amount + ", avgPrice=" + avgPrice + "]";
+		return "Position [id=" + id + ", amount=" + amount + ", averageCost=" + averageCost + "]";
 	}
+
 }

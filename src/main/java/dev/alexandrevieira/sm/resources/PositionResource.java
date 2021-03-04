@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.alexandrevieira.sm.domain.Position;
-import dev.alexandrevieira.sm.domain.PositionId;
+import dev.alexandrevieira.sm.domain.PositionPK;
 import dev.alexandrevieira.sm.services.PositionService;
 
 @RestController
@@ -22,8 +22,8 @@ public class PositionResource {
 	PositionService positionService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> getPosition(@RequestBody PositionId id) {
-		Position position = positionService.getPostion(id.getUserId(), id.getBrokerId(), id.getStockId());
+	public ResponseEntity<?> getPosition(@RequestBody PositionPK id) {
+		Position position = positionService.getPostion(id.getUser().getId(), id.getBroker().getId(), id.getStock().getId());
 		
 		return ResponseEntity.ok().body(position);
 	}

@@ -25,7 +25,7 @@ public class PositionTrade implements Serializable {
 	private Long id;
 	
 	@Column(nullable=false)
-	private int type;
+	private Integer type;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id")
@@ -71,21 +71,23 @@ public class PositionTrade implements Serializable {
 		this.tradeFee = tradeFee;
 		this.tradeResult = tradeResult;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	
+	
 	public TradeType getType() {
 		return TradeType.toEnum(this.type);
 	}
 
 	public void setType(TradeType type) {
 		this.type = type.getCod();
+	}
+
+		
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public User getUser() {

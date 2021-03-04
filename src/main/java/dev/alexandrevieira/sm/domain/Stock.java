@@ -3,7 +3,9 @@ package dev.alexandrevieira.sm.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,9 +47,9 @@ public class Stock implements Serializable {
 	@JsonBackReference
 	private List<User> users = new ArrayList<>();
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.stock")
 	@JsonBackReference
-	private List<Position> positions = new ArrayList<>();
+	private Set<Position> positions = new HashSet<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
 	@JsonBackReference
@@ -125,11 +127,11 @@ public class Stock implements Serializable {
 		this.users = users;
 	}
 
-	public List<Position> getPositions() {
+	public Set<Position> getPositions() {
 		return positions;
 	}
 
-	public void setPositions(List<Position> positions) {
+	public void setPositions(Set<Position> positions) {
 		this.positions = positions;
 	}
 
