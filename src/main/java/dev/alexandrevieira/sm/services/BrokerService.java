@@ -14,14 +14,14 @@ import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 public class BrokerService {
 
 	@Autowired
-	private BrokerRepository brokerRepository;
+	private BrokerRepository repository;
 	
 	public List<Broker> findAll() {
-		return brokerRepository.findAll();
+		return repository.findAll();
 	}
 	
 	public Broker find(Long id) {
-		Optional<Broker> opt = brokerRepository.findById(id);
+		Optional<Broker> opt = repository.findById(id);
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Broker.class.getName()));
 	}

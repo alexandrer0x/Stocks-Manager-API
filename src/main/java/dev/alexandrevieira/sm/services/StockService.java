@@ -16,42 +16,42 @@ import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 @Service
 public class StockService {
 	@Autowired
-	private StockRepository stockRepository;
+	private StockRepository repository;
 
 	public List<Stock> findAll() {
-		return stockRepository.findAll();
+		return repository.findAll();
 	}
 
 	public Stock find(String ticker) {
 		//Não remover o lançamento de exceção. Os métodos update() e delete() fazem uso dele
 		//Em caso de mudanças, reformular o tratamento de exceção
-		Optional<Stock> opt = stockRepository.findByTicker(ticker);
+		Optional<Stock> opt = repository.findByTicker(ticker);
 
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Ticker: " + ticker + ", Tipo: " + Stock.class.getName()));
 	}
 
 	public Stock insert(Stock stock) {
-		Optional<Stock> opt = stockRepository.findByTicker(stock.getTicker());
+		Optional<Stock> opt = repository.findByTicker(stock.getTicker());
 		
 		if(opt.orElse(null) != null) {
 			throw new DuplicateEntryException(
 					"Entrada duplicada! Ticker: " + stock.getTicker() + ", Tipo: " + Stock.class.getName());
 		}
 		
-		return stockRepository.save(stock);
+		return repository.save(stock);
 	}
 	
 	public Stock update(Stock stock) {
 		//Chamando find, pois caso não exista o ele já lançará a exceção
 		find(stock.getTicker());
-		return stockRepository.save(stock);
+		return repository.save(stock);
 	}
 	
 	@Transactional
 	public void delete(String ticker) {
 		//Chamando find, pois caso não exista o ele já lançará a exceção
 		find(ticker);
-		stockRepository.deleteByTicker(ticker);
+		repository.deleteByTicker(ticker);
 	}
 }

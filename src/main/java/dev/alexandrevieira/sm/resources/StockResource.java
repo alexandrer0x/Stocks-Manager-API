@@ -1,8 +1,8 @@
 package dev.alexandrevieira.sm.resources;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,12 +34,8 @@ public class StockResource {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<StockDTO>> findAll() {
 		List<Stock> stocks = stockService.findAll();
-		List<StockDTO> response = new ArrayList<>();
-		
-		for(Stock stock : stocks) {
-			StockDTO aux = new StockDTO(stock);
-			response.add(aux);
-		}
+		List<StockDTO> response = stocks.stream().map(obj -> new StockDTO(obj))
+				.collect(Collectors.toList());
 		
 		return ResponseEntity.ok().body(response);
 	}

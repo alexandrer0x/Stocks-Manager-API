@@ -16,18 +16,18 @@ import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 public class PositionService {
 	
 	@Autowired
-	private PositionRepository positionRepository;
+	private PositionRepository repository;
 	
 	public Position find(Long userId, Long brokerId, String stockTicker) {
 		PositionPK positionPK = new PositionPK(userId, brokerId, stockTicker);
-		Optional<Position> opt = positionRepository.findById(positionPK);
+		Optional<Position> opt = repository.findById(positionPK);
 		
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não econtrado! Id: " + positionPK + ", Tipo: " + Position.class.getName()));
 	}
 	
 	public List<Position> findByUser(Long userId) {
-		List<Position> positions = positionRepository.findByIdUser(new User(userId, null, null, null, null));
+		List<Position> positions = repository.findByIdUser(new User(userId, null, null, null, null));
 		
 		if(positions == null || positions.isEmpty())
 			throw new ObjectNotFoundException(

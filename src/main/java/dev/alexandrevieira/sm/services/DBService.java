@@ -1,7 +1,9 @@
 package dev.alexandrevieira.sm.services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,13 +91,11 @@ public class DBService {
 		user2.getFavoriteStocks().addAll(Arrays.asList(stock1, stock3, stock5));
 		user3.getFavoriteStocks().addAll(Arrays.asList(stock2, stock4));
 
-		PositionTrade pt1 = new PositionTrade(null, TradeType.COMPRA, user1, stock5, broker3, new Date(System.currentTimeMillis()),
-				100, 5.57, 0, 0);
+		List<PositionTrade> trades = new ArrayList<>();
+		
+		
 
-		// broker3.getPositionTrades().addAll(Arrays.asList(pt1));
-		// stock5.getPositionTrades().addAll(Arrays.asList(pt1));
-		// user1.getPositionTrades().addAll(Arrays.asList(pt1));
-
+		
 		brokerRepository.saveAll(Arrays.asList(broker1, broker2, broker3));
 
 		positionRepository.saveAll(Arrays.asList(position1, position2, position3, position4));
@@ -104,6 +104,71 @@ public class DBService {
 
 		stockRepository.saveAll(Arrays.asList(stock1, stock2, stock3, stock4, stock5));
 
-		positionTradeRepository.saveAll(Arrays.asList(pt1));
+		
+		
+		for(int i = 0, j=31, k = 132; i < 100; i++, j++, k--) {
+			PositionTrade trade = new PositionTrade(null, TradeType.COMPRA, user1, stock5, broker3, new Date(System.currentTimeMillis()),
+					100, 5.57, 0, 0);
+			
+			int n = ((int)(Math.random()*30))*100;
+			if(n == 0)
+				n = 100;
+			
+			trade.setAmount(n);
+			
+			double p = Math.random() * 100;
+			
+			if(p < 3)
+				p = p * 10;
+			
+			trade.setPrice(p);
+			
+			if(i % 8 == 0 || i % 12 == 0 || i % 31 == 0) {
+				trade.setStock(stock1);
+			}
+			else if(i % 5 == 0 || i % 23 == 0) {
+				trade.setStock(stock2);
+			}
+			else if(i % 7 == 0 || i % 11 == 0 || i % 19 == 0) {
+				trade.setStock(stock3);
+			}
+			
+			else if(i % 3 == 0 || i % 13 == 0 || i % 17 == 0 || i % 29 == 0 || i % 53 == 0) {
+				trade.setStock(stock4);
+			}
+			else {
+				trade.setStock(stock5);
+			}
+			
+			
+			
+			if(j % 5 == 0 || j % 8 == 0 || j % 31 == 0) {
+				trade.setBroker(broker1);
+			}
+			
+			else if(j % 3 == 0 || j % 7 == 0 || j % 11 == 0 || j % 13 == 0 || j % 37 == 0) {
+				trade.setBroker(broker2);
+			}
+			else {
+				trade.setBroker(broker3);
+			}
+			
+			
+			if(k % 5 == 0 || k % 8 == 0 || k % 31 == 0) {
+				trade.setUser(user1);
+			}
+			
+			else if(k % 3 == 0 || k % 7 == 0 || k % 11 == 0 || k % 13 == 0 || k % 37 == 0) {
+				trade.setUser(user2);
+			}
+			else {
+				trade.setUser(user3);
+			}
+			
+			trades.add(trade);
+		}
+		
+		positionTradeRepository.saveAll(trades);
+			
 	}
 }
