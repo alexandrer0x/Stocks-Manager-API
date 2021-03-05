@@ -48,14 +48,14 @@ public class PositionTrade implements Serializable {
 	
 	private double tradeFee;
 	
-	private double tradeResult;
+	private Double tradeResult;
 	
 	public PositionTrade() {
 		
 	}
 
 	public PositionTrade(Long id, TradeType type, User user, Stock stock, Broker broker, Date date, int amount,
-			double price, double tradeFee, double tradeResult) {
+			double price, double tradeFee, Double tradeResult) {
 		super();
 		this.id = id;
 		this.type = type.getCod();
@@ -143,11 +143,11 @@ public class PositionTrade implements Serializable {
 		this.tradeFee = tradeFee;
 	}
 
-	public double getTradeResult() {
+	public Double getTradeResult() {
 		return tradeResult;
 	}
 
-	public void setTradeResult(double tradeResult) {
+	public void setTradeResult(Double tradeResult) {
 		this.tradeResult = tradeResult;
 	}
 

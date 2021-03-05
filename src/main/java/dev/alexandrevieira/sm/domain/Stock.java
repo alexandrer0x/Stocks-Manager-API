@@ -21,17 +21,15 @@ public class Stock implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(nullable=false)
 	private String ticker;
 	
-	
+	@Column(nullable = false)
 	private String company;
 	
-	@Column(nullable=true)
-	private double price;
+	private Double price;
 	
-	@Column(nullable=true)
-	private double previousClosePrice;
+	private Double previousClosePrice;
+	
 	
 	private Date lastUpdated;
 	
@@ -51,7 +49,7 @@ public class Stock implements Serializable {
 		
 	}
 	
-	public Stock(String ticker, String company, double price, double previousClosePrice, Date lastUpdated) {
+	public Stock(String ticker, String company, Double price, Double previousClosePrice, Date lastUpdated) {
 		super();
 		this.ticker = ticker;
 		this.company = company;
@@ -78,19 +76,19 @@ public class Stock implements Serializable {
 		this.company = company;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
-	public double getPreviousClosePrice() {
+	public Double getPreviousClosePrice() {
 		return previousClosePrice;
 	}
 
-	public void setPreviousClosePrice(double previousClosePrice) {
+	public void setPreviousClosePrice(Double previousClosePrice) {
 		this.previousClosePrice = previousClosePrice;
 	}
 

@@ -108,7 +108,7 @@ public class DBService {
 		
 		for(int i = 0, j=31, k = 132; i < 100; i++, j++, k--) {
 			PositionTrade trade = new PositionTrade(null, TradeType.COMPRA, user1, stock5, broker3, new Date(System.currentTimeMillis()),
-					100, 5.57, 0, 0);
+					100, 5.57, 0, null);
 			
 			int n = ((int)(Math.random()*30))*100;
 			if(n == 0)
@@ -120,6 +120,8 @@ public class DBService {
 			
 			if(p < 3)
 				p = p * 10;
+			
+			p = Math.round(p * 100.0) / 100.0;
 			
 			trade.setPrice(p);
 			

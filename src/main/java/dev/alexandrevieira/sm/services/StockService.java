@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev.alexandrevieira.sm.domain.Stock;
+import dev.alexandrevieira.sm.dto.StockDTO;
 import dev.alexandrevieira.sm.repositories.StockRepository;
 import dev.alexandrevieira.sm.services.exceptions.DuplicateEntryException;
 import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
@@ -53,5 +54,9 @@ public class StockService {
 		//Chamando find, pois caso não exista o ele já lançará a exceção
 		find(ticker);
 		repository.deleteByTicker(ticker);
+	}
+	
+	public Stock fromDTO(StockDTO stockDTO) {
+		return new Stock(stockDTO.getTicker(), stockDTO.getCompany(), null, null, null);
 	}
 }
