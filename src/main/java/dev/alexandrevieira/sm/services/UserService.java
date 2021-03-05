@@ -6,9 +6,11 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import dev.alexandrevieira.sm.domain.User;
+import dev.alexandrevieira.sm.dto.UserNewDTO;
 import dev.alexandrevieira.sm.repositories.UserRepository;
 import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 
@@ -16,6 +18,10 @@ import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 public class UserService {
 	@Autowired
 	private UserRepository repository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	
 	public List<User> findaAll() {
 		return repository.findAll();
@@ -45,5 +51,11 @@ public class UserService {
 		//Chamando find, pois caso não exista o ele já lançará a exceção
 		find(id);
 		repository.deleteById(id);
+	}
+	
+	public User fromDTO(UserNewDTO objDTO) {
+		User user = new User(null, objDTO.getFirstName(), objDTO.getLasName(), objDTO.getEmail(), passwordEncoder.encode(objDTO.getPassword()));
+		
+		return user;
 	}
 }

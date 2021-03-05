@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import dev.alexandrevieira.sm.domain.Broker;
@@ -36,6 +37,9 @@ public class DBService {
 
 	@Autowired
 	private PositionTradeRepository positionTradeRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	public void instantiateTestDatabase() {
 		Stock stock1 = new Stock("SLCE3", "SLC Agrícola", 22.50, 23.80, new Date(System.currentTimeMillis()));
@@ -48,9 +52,9 @@ public class DBService {
 		Broker broker2 = new Broker(Long.valueOf(308), "Clear");
 		Broker broker3 = new Broker(Long.valueOf(1099), "Inter");
 
-		User user1 = new User(null, "Alexandre", "Vieira", "alexandrer0x@hotmail.com", "alexandre");
-		User user2 = new User(null, "João", "Silva", "joao@silva", "joao");
-		User user3 = new User(null, "Maria", "Santos", "maria@santos", "maria");
+		User user1 = new User(null, "Alexandre", "Vieira", "alexandrer0x@hotmail.com", passwordEncoder.encode("alexandre"));
+		User user2 = new User(null, "João", "Silva", "joao@silva", passwordEncoder.encode("joao"));
+		User user3 = new User(null, "Maria", "Santos", "maria@santos", passwordEncoder.encode("maria"));
 
 		brokerRepository.saveAll(Arrays.asList(broker1, broker2, broker3));
 
