@@ -2,6 +2,7 @@ package dev.alexandrevieira.sm.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,13 +24,16 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dev.alexandrevieira.sm.domain.enums.Profile;
 
 @Entity
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -93,6 +97,43 @@ public class User implements Serializable {
 		this.addProfile(Profile.USER);
 	}
 	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.getProfiles().stream().map(
+				x -> new SimpleGrantedAuthority(x.getDescription()))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public String getPassword() {
+		return this.password;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+	
 	public Set<Profile> getProfiles() {
 		return this.profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
 	}
@@ -131,10 +172,6 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
 	}
 
 	public void setPassword(String password) {
