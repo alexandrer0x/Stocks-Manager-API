@@ -61,26 +61,29 @@ public class DBService {
 		Position position3 = new Position(user1, broker3, stock5, 100, 13.21);
 		Position position4 = new Position(user1, broker1, stock2, 100, 15.27);
 
-		/*
-		 * user1.getBrokers().addAll(Arrays.asList(broker1, broker2));
-		 * user2.getBrokers().addAll(Arrays.asList(broker1, broker3));
-		 * user3.getBrokers().addAll(Arrays.asList(broker2, broker3));
-		 * 
-		 * user1.getFavoriteStocks().addAll(Arrays.asList(stock1, stock2, stock3,
-		 * stock4, stock5)); user2.getFavoriteStocks().addAll(Arrays.asList(stock1,
-		 * stock3, stock5)); user3.getFavoriteStocks().addAll(Arrays.asList(stock2,
-		 * stock4));
-		 * 
-		 * broker1.getUsers().addAll(Arrays.asList(user1, user2));
-		 * broker2.getUsers().addAll(Arrays.asList(user1, user3));
-		 * broker3.getUsers().addAll(Arrays.asList(user2, user3));
-		 * 
-		 * stock1.getUsers().addAll(Arrays.asList(user1, user2));
-		 * stock2.getUsers().addAll(Arrays.asList(user1, user3));
-		 * stock3.getUsers().addAll(Arrays.asList(user1, user2));
-		 * stock4.getUsers().addAll(Arrays.asList(user1, user3));
-		 * stock5.getUsers().addAll(Arrays.asList(user1, user2));
-		 */
+		
+		user1.getBrokers().addAll(Arrays.asList(broker1, broker2));
+		user2.getBrokers().addAll(Arrays.asList(broker1, broker3));
+		user3.getBrokers().addAll(Arrays.asList(broker2, broker3));
+		
+		user1.getBrokers().addAll(Arrays.asList(broker1, broker2));
+		user2.getBrokers().addAll(Arrays.asList(broker1, broker3));
+		user3.getBrokers().addAll(Arrays.asList(broker2, broker3));
+
+		user1.getFavoriteStocks().addAll(Arrays.asList(stock1, stock2, stock3, stock4, stock5));
+		user2.getFavoriteStocks().addAll(Arrays.asList(stock1, stock3, stock5));
+		user3.getFavoriteStocks().addAll(Arrays.asList(stock2, stock4));
+
+		broker1.getUsers().addAll(Arrays.asList(user1, user2));
+		broker2.getUsers().addAll(Arrays.asList(user1, user3));
+		broker3.getUsers().addAll(Arrays.asList(user2, user3));
+
+		stock1.getUsers().addAll(Arrays.asList(user1, user2));
+		stock2.getUsers().addAll(Arrays.asList(user1, user3));
+		stock3.getUsers().addAll(Arrays.asList(user1, user2));
+		stock4.getUsers().addAll(Arrays.asList(user1, user3));
+		stock5.getUsers().addAll(Arrays.asList(user1, user2));
+		 
 
 		user1.getFavoriteStocks().addAll(Arrays.asList(stock1, stock2, stock3, stock4, stock5));
 		user2.getFavoriteStocks().addAll(Arrays.asList(stock1, stock3, stock5));

@@ -150,12 +150,6 @@ public class PositionTrade implements Serializable {
 	public void setTradeResult(double tradeResult) {
 		this.tradeResult = tradeResult;
 	}
-	
-	
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	@Override
 	public int hashCode() {

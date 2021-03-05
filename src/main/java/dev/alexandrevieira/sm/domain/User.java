@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,6 +37,7 @@ public class User implements Serializable {
 	private String lastName;
 	
 	@Email
+	@NaturalId
 	@Column(nullable = false)
 	private String email;
 	
@@ -52,12 +54,12 @@ public class User implements Serializable {
 	
 	
 	@ManyToMany
-	@JoinTable(name="favorite_stock",
+	@JoinTable(name="favorite_stock", 
 		joinColumns = @JoinColumn(name = "user_id"),
 		inverseJoinColumns = @JoinColumn(name = "stock_ticker"))
 	
 	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	private List<Stock> favoriteStocks = new ArrayList<>();
+	private Set<Stock> favoriteStocks = new HashSet<>();
 	
 	
 	@ManyToMany
@@ -65,7 +67,7 @@ public class User implements Serializable {
 			joinColumns = @JoinColumn(name= "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "broker_id"))
 	
-	private List<Broker> brokers = new ArrayList<>();
+	private Set<Broker> brokers = new HashSet<>();
 
 	public User() {
 		
@@ -136,24 +138,20 @@ public class User implements Serializable {
 		this.positionTrades = positionTrades;
 	}
 
-	public List<Stock> getFavoriteStocks() {
+	public Set<Stock> getFavoriteStocks() {
 		return favoriteStocks;
 	}
 
-	public void setFavoriteStocks(List<Stock> favoriteStocks) {
+	public void setFavoriteStocks(Set<Stock> favoriteStocks) {
 		this.favoriteStocks = favoriteStocks;
 	}
 
-	public List<Broker> getBrokers() {
+	public Set<Broker> getBrokers() {
 		return brokers;
 	}
 
-	public void setBrokers(List<Broker> brokers) {
+	public void setBrokers(Set<Broker> brokers) {
 		this.brokers = brokers;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	@Override

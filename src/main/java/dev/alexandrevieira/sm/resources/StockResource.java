@@ -1,6 +1,7 @@
 package dev.alexandrevieira.sm.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import dev.alexandrevieira.sm.domain.Stock;
+import dev.alexandrevieira.sm.dto.StockDTO;
 import dev.alexandrevieira.sm.services.StockService;
 
 @RestController
@@ -30,9 +32,16 @@ public class StockResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Stock>> findAll() {
+	public ResponseEntity<List<StockDTO>> findAll() {
 		List<Stock> stocks = stockService.findAll();
-		return ResponseEntity.ok().body(stocks);
+		List<StockDTO> response = new ArrayList<>();
+		
+		for(Stock stock : stocks) {
+			StockDTO aux = new StockDTO(stock);
+			response.add(aux);
+		}
+		
+		return ResponseEntity.ok().body(response);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

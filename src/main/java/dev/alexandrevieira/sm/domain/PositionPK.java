@@ -70,10 +70,6 @@ public class PositionPK implements Serializable {
 		this.stock = stock;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

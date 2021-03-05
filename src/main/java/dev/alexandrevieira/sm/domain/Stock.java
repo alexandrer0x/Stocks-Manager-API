@@ -37,7 +37,7 @@ public class Stock implements Serializable {
 	
 	@ManyToMany(mappedBy="favoriteStocks")
 	@JsonIgnore
-	private List<User> users = new ArrayList<>();
+	private Set<User> users = new HashSet<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.stock")
 	@JsonIgnore
@@ -102,11 +102,11 @@ public class Stock implements Serializable {
 		this.lastUpdated = lastUpdated;
 	}
 
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
@@ -124,10 +124,6 @@ public class Stock implements Serializable {
 
 	public void setPositionTrades(List<PositionTrade> positionTrades) {
 		this.positionTrades = positionTrades;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	@Override

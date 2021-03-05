@@ -28,7 +28,7 @@ public class Broker implements Serializable {
 	
 	@ManyToMany(mappedBy = "brokers")
 	@JsonIgnore
-	private List<User> users = new ArrayList<>();
+	private Set<User> users = new HashSet<>();
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.broker")
 	@JsonIgnore
@@ -64,11 +64,11 @@ public class Broker implements Serializable {
 		this.name = name;
 	}
 
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 	
@@ -86,10 +86,6 @@ public class Broker implements Serializable {
 
 	public void setPositionTrades(List<PositionTrade> positionTrades) {
 		this.positionTrades = positionTrades;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	@Override

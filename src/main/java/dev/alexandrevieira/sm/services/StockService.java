@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import dev.alexandrevieira.sm.domain.Stock;
 import dev.alexandrevieira.sm.repositories.StockRepository;
+import dev.alexandrevieira.sm.services.exceptions.DuplicateEntryException;
 import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -31,19 +32,25 @@ public class StockService {
 	}
 
 	public Stock insert(Stock stock) {
-		stock.setTicker(null);
+		Optional<Stock> opt = stockRepository.findByTicker(stock.getTicker());
+		
+		if(opt.orElse(null) != null) {
+			throw new DuplicateEntryException(
+					"Entrada duplicada! Ticker: " + stock.getTicker() + ", Tipo: " + Stock.class.getName());
+		}
+		
 		return stockRepository.save(stock);
 	}
 	
 	public Stock update(Stock stock) {
-		//chamando find, pois caso não exista o ele já lançará a exceção
+		//Chamando find, pois caso não exista o ele já lançará a exceção
 		find(stock.getTicker());
 		return stockRepository.save(stock);
 	}
 	
 	@Transactional
 	public void delete(String ticker) {
-		//chamando find, pois caso não exista o ele já lançará a exceção
+		//Chamando find, pois caso não exista o ele já lançará a exceção
 		find(ticker);
 		stockRepository.deleteByTicker(ticker);
 	}
