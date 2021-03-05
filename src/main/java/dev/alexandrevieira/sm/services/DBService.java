@@ -14,6 +14,7 @@ import dev.alexandrevieira.sm.domain.Position;
 import dev.alexandrevieira.sm.domain.PositionTrade;
 import dev.alexandrevieira.sm.domain.Stock;
 import dev.alexandrevieira.sm.domain.User;
+import dev.alexandrevieira.sm.domain.enums.Profile;
 import dev.alexandrevieira.sm.domain.enums.TradeType;
 import dev.alexandrevieira.sm.repositories.BrokerRepository;
 import dev.alexandrevieira.sm.repositories.PositionRepository;
@@ -53,6 +54,8 @@ public class DBService {
 		Broker broker3 = new Broker(Long.valueOf(1099), "Inter");
 
 		User user1 = new User(null, "Alexandre", "Vieira", "alexandrer0x@hotmail.com", passwordEncoder.encode("alexandre"));
+		user1.addProfile(Profile.ADMIN);
+		
 		User user2 = new User(null, "João", "Silva", "joao@silva", passwordEncoder.encode("joao"));
 		User user3 = new User(null, "Maria", "Santos", "maria@santos", passwordEncoder.encode("maria"));
 

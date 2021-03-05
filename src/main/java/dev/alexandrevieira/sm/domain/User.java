@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +25,8 @@ import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import dev.alexandrevieira.sm.domain.enums.Profile;
 
 @Entity
 public class User implements Serializable {
@@ -44,6 +50,10 @@ public class User implements Serializable {
 	@Column(nullable = false)
 	@JsonIgnore
 	private String password;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "profile")
+	private Set<Integer> profiles = new HashSet<>();
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.user")
@@ -70,7 +80,7 @@ public class User implements Serializable {
 	private Set<Broker> brokers = new HashSet<>();
 
 	public User() {
-		
+		this.addProfile(Profile.USER);
 	}
 
 	public User(Long id, String firstName, String lastName, @Email String email, String password) {
@@ -80,6 +90,15 @@ public class User implements Serializable {
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.addProfile(Profile.USER);
+	}
+	
+	public Set<Profile> getProfiles() {
+		return this.profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addProfile(Profile profile) {
+		this.profiles.add(profile.getCod());
 	}
 
 	public Long getId() {

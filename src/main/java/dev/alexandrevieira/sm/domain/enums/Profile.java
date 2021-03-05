@@ -1,13 +1,13 @@
 package dev.alexandrevieira.sm.domain.enums;
 
-public enum TradeType {
-	COMPRA(1, "Compra"),
-	VENDA(2, "Venda");
+public enum Profile {
+	ADMIN(1, "ROLE_ADMIN"),
+	USER(2, "ROLE_USER");
 	
 	private int cod;
 	private String description;
 	
-	private TradeType(Integer cod, String description) {
+	private Profile(Integer cod, String description) {
 		this.cod = cod;
 		this.description = description;
 	}
@@ -20,12 +20,12 @@ public enum TradeType {
 		return description;
 	}
 	
-	public static TradeType toEnum(Integer cod) {
+	public static Profile toEnum(Integer cod) {
 		if (cod == null) {
 			return null;
 		}
 		
-		for (TradeType x : TradeType.values()) {
+		for (Profile x : Profile.values()) {
 			if(cod.equals(x.getCod())) {
 				return x;
 			}
