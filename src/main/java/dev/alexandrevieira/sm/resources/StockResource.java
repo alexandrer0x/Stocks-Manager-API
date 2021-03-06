@@ -40,6 +40,7 @@ public class StockResource {
 		return ResponseEntity.ok().body(response);
 	}
 
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Stock stock) {
 		stock = stockService.insert(stock);

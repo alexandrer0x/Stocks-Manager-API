@@ -20,26 +20,25 @@ import dev.alexandrevieira.sm.domain.User;
 import dev.alexandrevieira.sm.dto.CredentialsDTO;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	
+
 	private AuthenticationManager authenticationManager;
-	
+
 	private JWTUtil jwtUtil;
-	
+
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
 		this.jwtUtil = jwtUtil;
 		this.authenticationManager = authenticationManager;
 	}
-	
+
 	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request,
+	public Authentication attemptAuthentication(HttpServletRequest request, 
 												HttpServletResponse response) throws AuthenticationException {
-		
-		
+
 		try {
-			CredentialsDTO creds = new ObjectMapper()
-					.readValue(request.getInputStream(), CredentialsDTO.class);
+			CredentialsDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredentialsDTO.class);
+
 			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-					creds.getEmail(), 
+					creds.getUsername(),
 					creds.getPassword(), 
 					new ArrayList<>());
 
@@ -49,18 +48,17 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		
-		
+
 	}
-	
+
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request,
 											HttpServletResponse response, 
 											FilterChain chain, 
 											Authentication authResult) throws IOException, ServletException {
-	
-		String email = ((User)authResult.getPrincipal()).getUsername();
-		String token = jwtUtil.generateToken(email);
+
+		User user = ((User) authResult.getPrincipal());
+		String token = jwtUtil.generateToken(user);
 		response.addHeader("Authorization", token);
 	}
 }

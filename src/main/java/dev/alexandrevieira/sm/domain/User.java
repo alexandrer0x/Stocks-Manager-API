@@ -21,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Email;
@@ -56,7 +57,7 @@ public class User implements Serializable, UserDetails {
 	private String password;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "profile")
+	@CollectionTable(name = "profile", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "profiles"}))
 	private Set<Integer> profiles = new HashSet<>();
 	
 	
