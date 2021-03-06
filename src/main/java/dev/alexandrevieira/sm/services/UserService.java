@@ -35,6 +35,12 @@ public class UserService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));
 	}
 	
+	public User findByEmail(String email) {
+		Optional<User> opt = repository.findByEmailIgnoreCase(email);
+		return opt.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Email: " + email + ", Tipo: " + User.class.getName()));
+	}
+	
 	public User insert(User user) {
 		user.setId(null);
 		return repository.save(user);
