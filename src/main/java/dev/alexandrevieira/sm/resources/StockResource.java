@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +41,7 @@ public class StockResource {
 		return ResponseEntity.ok().body(response);
 	}
 
-	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Stock stock) {
 		stock = stockService.insert(stock);
@@ -50,6 +51,7 @@ public class StockResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.PUT, value = "/{ticker}")
 	public ResponseEntity<Void> update(@PathVariable String ticker, @RequestBody Stock stock) {
 		stock.setTicker(ticker);
@@ -57,6 +59,7 @@ public class StockResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.DELETE, value="/{ticker}")
 	public ResponseEntity<Stock> delete(@PathVariable String ticker) {
 		stockService.delete(ticker);

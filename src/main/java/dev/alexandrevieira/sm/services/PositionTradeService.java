@@ -31,7 +31,7 @@ public class PositionTradeService {
 	}
 	
 	public List<PositionTrade> findAllByUserEmail(String userEmail) {
-		Optional<User> opt = userRepository.findByEmail(userEmail);
+		Optional<User> opt = userRepository.findByEmailIgnoreCase(userEmail);
 		
 		if(opt.orElse(null) == null) {
 			throw new ObjectNotFoundException(

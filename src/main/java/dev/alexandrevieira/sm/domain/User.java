@@ -135,6 +135,10 @@ public class User implements Serializable, UserDetails {
 		return true;
 	}
 	
+	public boolean hasRole(Profile profile) {
+		return this.getAuthorities().contains(new SimpleGrantedAuthority(profile.getDescription()));
+	}
+	
 	public Set<Profile> getProfiles() {
 		return this.profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
 	}

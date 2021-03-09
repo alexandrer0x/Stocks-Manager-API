@@ -6,12 +6,15 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import dev.alexandrevieira.sm.domain.User;
+import dev.alexandrevieira.sm.domain.enums.Profile;
 import dev.alexandrevieira.sm.dto.UserNewDTO;
 import dev.alexandrevieira.sm.repositories.UserRepository;
+import dev.alexandrevieira.sm.services.exceptions.AuthorizationException;
 import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -28,14 +31,30 @@ public class UserService {
 	}
 	
 	public User find(Long id) {
+		User user = UserService.authenticated();
+		
+		if(user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		
+		Optional<User> opt = repository.findById(id);
+		
+		
+		
 		//Não remover o lançamento de exceção. Os métodos update() e delete() fazem uso dele
 		//Em caso de mudanças, reformular o tratamento de exceção
-		Optional<User> opt = repository.findById(id);
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));
 	}
 	
 	public User findByEmail(String email) {
+		User user = UserService.authenticated();
+		
+		if(user == null || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<User> opt = repository.findByEmailIgnoreCase(email);
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Email: " + email + ", Tipo: " + User.class.getName()));
@@ -63,5 +82,14 @@ public class UserService {
 		User user = new User(null, objDTO.getFirstName(), objDTO.getLasName(), objDTO.getEmail(), passwordEncoder.encode(objDTO.getPassword()));
 		
 		return user;
+	}
+	
+	public static User authenticated() {
+		try {
+			return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 }
