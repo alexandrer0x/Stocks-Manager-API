@@ -7,6 +7,8 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import dev.alexandrevieira.sm.domain.User;
+
 public class UserNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -25,7 +27,13 @@ public class UserNewDTO implements Serializable {
 	private String password;
 
 	public UserNewDTO() {
-
+		
+	}
+	
+	public UserNewDTO(User user) {
+		this.email = user.getUsername();
+		this.firstName = user.getFirstName();
+		this.lasName = user.getLastName();
 	}
 	
 	public String getEmail() {
