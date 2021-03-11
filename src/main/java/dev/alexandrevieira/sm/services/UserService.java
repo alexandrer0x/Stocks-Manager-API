@@ -2,6 +2,7 @@ package dev.alexandrevieira.sm.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import dev.alexandrevieira.sm.domain.Stock;
 import dev.alexandrevieira.sm.domain.User;
 import dev.alexandrevieira.sm.domain.enums.Profile;
 import dev.alexandrevieira.sm.dto.UserNewDTO;
@@ -76,6 +78,15 @@ public class UserService {
 		//Chamando find, pois caso não exista o ele já lançará a exceção
 		find(id);
 		repository.deleteById(id);
+	}
+	
+	public Set<Stock> getFavorites(String email) {
+		User user = this.findByEmail(email);
+		
+		//List<StockDTO> response = user.getFavoriteStocks().stream().map(x -> new StockDTO(x)).collect(Collectors.toList());
+		Set<Stock> response = user.getFavoriteStocks();
+		
+		return response;
 	}
 	
 	public User fromDTO(UserNewDTO objDTO) {

@@ -7,6 +7,8 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dev.alexandrevieira.sm.domain.User;
 
 public class UserNewDTO implements Serializable {
@@ -24,6 +26,7 @@ public class UserNewDTO implements Serializable {
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Length(min = 6, max = 20, message = "O tamanho deve ser entre 6 e 20 caracteres")
+	@JsonIgnore
 	private String password;
 
 	public UserNewDTO() {

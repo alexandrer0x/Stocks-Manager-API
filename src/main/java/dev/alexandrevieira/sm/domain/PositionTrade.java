@@ -1,7 +1,7 @@
 package dev.alexandrevieira.sm.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +40,7 @@ public class PositionTrade implements Serializable {
 	private Broker broker;
 	
 	@Column(nullable=false)
-	private Date date;
+	private LocalDateTime date;
 	
 	private int amount;
 	
@@ -54,7 +54,7 @@ public class PositionTrade implements Serializable {
 		
 	}
 
-	public PositionTrade(Long id, TradeType type, User user, Stock stock, Broker broker, Date date, int amount,
+	public PositionTrade(Long id, TradeType type, User user, Stock stock, Broker broker, LocalDateTime date, int amount,
 			double price, double tradeFee, Double tradeResult) {
 		super();
 		this.id = id;
@@ -111,11 +111,11 @@ public class PositionTrade implements Serializable {
 		this.broker = broker;
 	}
 
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 

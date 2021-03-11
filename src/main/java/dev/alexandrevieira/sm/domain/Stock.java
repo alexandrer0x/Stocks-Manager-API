@@ -1,8 +1,8 @@
 package dev.alexandrevieira.sm.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +31,7 @@ public class Stock implements Serializable {
 	private Double previousClosePrice;
 	
 	
-	private Date lastUpdated;
+	private LocalDateTime lastUpdated;
 	
 	@ManyToMany(mappedBy="favoriteStocks")
 	@JsonIgnore
@@ -49,7 +49,7 @@ public class Stock implements Serializable {
 		
 	}
 	
-	public Stock(String ticker, String company, Double price, Double previousClosePrice, Date lastUpdated) {
+	public Stock(String ticker, String company, Double price, Double previousClosePrice, LocalDateTime lastUpdated) {
 		super();
 		this.ticker = ticker;
 		this.company = company;
@@ -58,7 +58,12 @@ public class Stock implements Serializable {
 		this.lastUpdated = lastUpdated;
 	}
 
-
+	public Double getChangePercent() {
+		 if (this.price != null && this.previousClosePrice != null && this.previousClosePrice != 0){
+             return (this.price / this.previousClosePrice - 1) * 100;
+         }
+         return null;
+	}
 
 	public String getTicker() {
 		return ticker;
@@ -92,11 +97,11 @@ public class Stock implements Serializable {
 		this.previousClosePrice = previousClosePrice;
 	}
 
-	public Date getLastUpdated() {
+	public LocalDateTime getLastUpdated() {
 		return lastUpdated;
 	}
 
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(LocalDateTime lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 

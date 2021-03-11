@@ -1,5 +1,6 @@
 package dev.alexandrevieira.sm.services;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -43,11 +44,11 @@ public class DBService {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	public void instantiateTestDatabase() {
-		Stock stock1 = new Stock("SLCE3", "SLC Agrícola", 22.50, 23.80, new Date(System.currentTimeMillis()));
-		Stock stock2 = new Stock("LWSA3", "Locaweb", 28.70, 29.85, new Date(System.currentTimeMillis()));
-		Stock stock3 = new Stock("MOVI3", "Movida", 28.70, 29.85, new Date(System.currentTimeMillis()));
-		Stock stock4 = new Stock("PRIO3", "PetroRio", 28.70, 29.85, new Date(System.currentTimeMillis()));
-		Stock stock5 = new Stock("CSAN3", "Cosan", 28.70, 29.85, new Date(System.currentTimeMillis()));
+		Stock stock1 = new Stock("SLCE3", "SLC Agrícola", 22.50, 23.80, LocalDateTime.now());
+		Stock stock2 = new Stock("LWSA3", "Locaweb", 28.70, 29.85, LocalDateTime.now());
+		Stock stock3 = new Stock("MOVI3", "Movida", 28.70, 29.85, LocalDateTime.now());
+		Stock stock4 = new Stock("PRIO3", "PetroRio", 28.70, 29.85, LocalDateTime.now());
+		Stock stock5 = new Stock("CSAN3", "Cosan", 28.70, 29.85, LocalDateTime.now());
 
 		Broker broker1 = new Broker(Long.valueOf(820), "BB");
 		Broker broker2 = new Broker(Long.valueOf(308), "Clear");
