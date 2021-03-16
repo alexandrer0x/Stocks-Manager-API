@@ -3,7 +3,6 @@ package dev.alexandrevieira.sm.services;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +43,11 @@ public class DBService {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	public void instantiateTestDatabase() {
-		Stock stock1 = new Stock("SLCE3", "SLC Agrícola", 22.50, 23.80, LocalDateTime.now());
-		Stock stock2 = new Stock("LWSA3", "Locaweb", 28.70, 29.85, LocalDateTime.now());
-		Stock stock3 = new Stock("MOVI3", "Movida", 28.70, 29.85, LocalDateTime.now());
-		Stock stock4 = new Stock("PRIO3", "PetroRio", 28.70, 29.85, LocalDateTime.now());
-		Stock stock5 = new Stock("CSAN3", "Cosan", 28.70, 29.85, LocalDateTime.now());
+		Stock stock1 = new Stock("SLCE3", "SLC Agrícola", 22.50, 23.80, null);
+		Stock stock2 = new Stock("LWSA3", "Locaweb", 28.70, 29.85, null);
+		Stock stock3 = new Stock("MOVI3", "Movida", 28.70, 29.85, null);
+		Stock stock4 = new Stock("PRIO3", "PetroRio", 28.70, 29.85, null);
+		Stock stock5 = new Stock("CSAN3", "Cosan", 28.70, 29.85, null);
 
 		Broker broker1 = new Broker(Long.valueOf(820), "BB");
 		Broker broker2 = new Broker(Long.valueOf(308), "Clear");
@@ -115,7 +114,7 @@ public class DBService {
 		
 		
 		for(int i = 0, j=31, k = 132; i < 100; i++, j++, k--) {
-			PositionTrade trade = new PositionTrade(null, TradeType.COMPRA, user1, stock5, broker3, new Date(System.currentTimeMillis()),
+			PositionTrade trade = new PositionTrade(null, TradeType.COMPRA, user1, stock5, broker3, LocalDateTime.now(),
 					100, 5.57, 0, null);
 			
 			int n = ((int)(Math.random()*30))*100;

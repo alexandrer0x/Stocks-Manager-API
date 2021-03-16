@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.alexandrevieira.sm.domain.Broker;
 import dev.alexandrevieira.sm.domain.Position;
 import dev.alexandrevieira.sm.domain.PositionPK;
 import dev.alexandrevieira.sm.services.PositionService;
@@ -33,5 +35,11 @@ public class PositionResource {
 		List<Position> positions = positionService.findByUser(userId);
 		
 		return ResponseEntity.ok().body(positions);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/brokers")
+	public ResponseEntity<List<Broker>> findUserBrokers(@RequestParam(value = "user") Long userId) {
+		List<Broker> brokers = positionService.findBrokersByUser(userId);
+		return ResponseEntity.ok().body(brokers);
 	}
 }

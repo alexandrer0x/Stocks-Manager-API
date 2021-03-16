@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dev.alexandrevieira.sm.domain.Broker;
 import dev.alexandrevieira.sm.domain.Position;
 import dev.alexandrevieira.sm.domain.PositionPK;
 import dev.alexandrevieira.sm.domain.User;
@@ -34,5 +35,10 @@ public class PositionService {
 					"Objeto não econtrado! Id: " + userId + ", Tipo: " + Position.class.getName());
 		
 		return positions;
+	}
+	
+	public List<Broker> findBrokersByUser(Long userId) {
+		List<Broker> brokers = repository.findBrokersByUser(userId);
+		return brokers;
 	}
 }
