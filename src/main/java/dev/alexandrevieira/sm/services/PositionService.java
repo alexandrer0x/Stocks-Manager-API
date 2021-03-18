@@ -38,7 +38,7 @@ public class PositionService {
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
 				String.format(
 						"Objeto não econtrado! UserId: %d, BrokerId: %d, StockTicker: %s, Tipo: %s",
-						userId, brokerId, stockTicker, Position.class.getName())));
+						userId, brokerId, stockTicker, Position.class.getSimpleName())));
 	}
 	
 	public List<Position> findByUser(String userEmail) {
@@ -53,7 +53,7 @@ public class PositionService {
 		
 		if(positions == null)
 			throw new ObjectNotFoundException(
-					"Objeto não econtrado! Id: " + userId + ", Tipo: " + User.class.getName());
+					"Objeto não econtrado! Id: " + userId + ", Tipo: " + User.class.getSimpleName());
 		
 		return positions;
 	}

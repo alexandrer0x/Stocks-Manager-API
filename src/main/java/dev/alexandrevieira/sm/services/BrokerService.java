@@ -23,6 +23,6 @@ public class BrokerService {
 	public Broker find(Long id) {
 		Optional<Broker> opt = repository.findById(id);
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Broker.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Broker.class.getSimpleName()));
 	}
 }

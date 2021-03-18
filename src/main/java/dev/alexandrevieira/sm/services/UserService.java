@@ -48,7 +48,7 @@ public class UserService {
 		//Não remover o lançamento de exceção. Os métodos update() e delete() fazem uso dele
 		//Em caso de mudanças, reformular o tratamento de exceção
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + User.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + User.class.getSimpleName()));
 	}
 	
 	public User findByEmail(String email) {
@@ -59,7 +59,7 @@ public class UserService {
 		
 		Optional<User> opt = repository.findByEmailIgnoreCase(email);
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Email: " + email + ", Tipo: " + User.class.getName()));
+				"Objeto não encontrado! Email: " + email + ", Tipo: " + User.class.getSimpleName()));
 	}
 	
 	public User insert(User user) {
@@ -100,7 +100,7 @@ public class UserService {
 		
 		if(userId == null) {
 			throw new ObjectNotFoundException(
-					"Objeto não encontrado! Email: " + email + ", Tipo: " + User.class.getName());
+					"Objeto não encontrado! Email: " + email + ", Tipo: " + User.class.getSimpleName());
 		}
 		
 		return userId;

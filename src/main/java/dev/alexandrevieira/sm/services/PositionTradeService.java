@@ -27,7 +27,7 @@ public class PositionTradeService {
 		Optional<PositionTrade> opt =  repository.findById(id);
 		
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + PositionTrade.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + PositionTrade.class.getSimpleName()));
 	}
 	
 	public List<PositionTrade> findAllByUserEmail(String userEmail) {
@@ -35,7 +35,7 @@ public class PositionTradeService {
 		
 		if(opt.orElse(null) == null) {
 			throw new ObjectNotFoundException(
-					"Objeto não encontrado! Email: " + userEmail + ", Tipo: " + User.class.getName());
+					"Objeto não encontrado! Email: " + userEmail + ", Tipo: " + User.class.getSimpleName());
 		}
 		
 		List<PositionTrade> trades = repository.findAllByUserEmail(userEmail);

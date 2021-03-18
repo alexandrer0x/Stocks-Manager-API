@@ -37,7 +37,7 @@ public class StockService {
 		Optional<Stock> opt = repository.findByTicker(ticker);
 
 		return opt.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Ticker: " + ticker + ", Tipo: " + Stock.class.getName()));
+				"Objeto não encontrado! Ticker: " + ticker + ", Tipo: " + Stock.class.getSimpleName()));
 	}
 
 	public Stock insert(Stock stock) {
@@ -45,7 +45,7 @@ public class StockService {
 		
 		if(opt.orElse(null) != null) {
 			throw new DuplicateEntryException(
-					"Entrada duplicada! Ticker: " + stock.getTicker() + ", Tipo: " + Stock.class.getName());
+					"Entrada duplicada! Ticker: " + stock.getTicker() + ", Tipo: " + Stock.class.getSimpleName());
 		}
 		
 		return repository.save(stock);
