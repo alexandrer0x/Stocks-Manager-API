@@ -27,15 +27,18 @@ public class UserService {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private AuthService authService;
+	
 	
 	public List<User> findaAll() {
 		return repository.findAll();
 	}
 	
 	public User find(Long id) {
-		User user = UserService.authenticated();
+		//User user = authService.authenticated();
 		
-		if(user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+		if(!authService.isAdmin() && !authService.isTheUser(id)) {
 			throw new AuthorizationException("Acesso negado");
 		}
 		
@@ -51,9 +54,8 @@ public class UserService {
 	}
 	
 	public User findByEmail(String email) {
-		User user = UserService.authenticated();
 		
-		if(user == null || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())) {
+		if(!authService.isAdmin() && !authService.isTheUser(email)) {
 			throw new AuthorizationException("Acesso negado");
 		}
 		
@@ -94,13 +96,17 @@ public class UserService {
 		
 		return user;
 	}
-	
-	public static User authenticated() {
-		try {
-			return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+	public Long getUserIdByEmail(String email) {
+		Long userId = repository.getIdByEmail(email);
+		
+		if(userId == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Email: " + email + ", Tipo: " + User.class.getName());
 		}
-		catch (Exception e) {
-			return null;
-		}
+		
+		return userId;
 	}
+	
+	
 }

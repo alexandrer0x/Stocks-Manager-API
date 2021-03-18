@@ -32,6 +32,14 @@ public class Position implements Serializable {
 
 
 
+	public PositionPK getId() {
+		return id;
+	}
+
+	public void setId(PositionPK id) {
+		this.id = id;
+	}
+
 	public double positionCost() {
 		return amount * averageCost;
 	}
