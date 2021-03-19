@@ -1,5 +1,7 @@
 package dev.alexandrevieira.sm.resources.exceptions;
 
+import java.time.LocalDateTime;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -21,7 +23,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ResponseEntity<StandardError> constraintViolation(ConstraintViolationException e, HttpServletRequest request) {
 		final HttpStatus status = HttpStatus.BAD_REQUEST;
-		StandardError err = new StandardError(status.value(), "Violação à restição do banco de dados.", System.currentTimeMillis());
+		StandardError err = new StandardError(status.value(), "Violação à restição do banco de dados.", LocalDateTime.now());
 		
 		return ResponseEntity.status(status).body(err);
 	}
@@ -29,7 +31,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(DuplicateEntryException.class)
 	public ResponseEntity<StandardError> duplicateEntry(DuplicateEntryException e, HttpServletRequest request) {
 		final HttpStatus status = HttpStatus.BAD_REQUEST;
-		StandardError err = new StandardError(status.value(), e.getMessage(), System.currentTimeMillis());
+		StandardError err = new StandardError(status.value(), e.getMessage(), LocalDateTime.now());
 		
 		return ResponseEntity.status(status).body(err);
 	}
@@ -37,7 +39,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<StandardError> dataIntegrityViolation(DataIntegrityViolationException e, HttpServletRequest request) {
 		final HttpStatus status = HttpStatus.BAD_REQUEST;
-		StandardError err = new StandardError(status.value(), "Violação à integridade dos dados.", System.currentTimeMillis());
+		StandardError err = new StandardError(status.value(), "Violação à integridade dos dados.", LocalDateTime.now());
 		
 		return ResponseEntity.status(status).body(err);
 	}
@@ -45,7 +47,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
 		final HttpStatus status = HttpStatus.NOT_FOUND;
-		StandardError err = new StandardError(status.value(), e.getMessage(), System.currentTimeMillis());
+		StandardError err = new StandardError(status.value(), e.getMessage(), LocalDateTime.now());
 		
 		return ResponseEntity.status(status).body(err);
 	}
@@ -53,7 +55,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(AuthorizationException.class)
 	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
 		final HttpStatus status = HttpStatus.FORBIDDEN;
-		StandardError err = new StandardError(status.value(), e.getMessage(), System.currentTimeMillis());
+		StandardError err = new StandardError(status.value(), e.getMessage(), LocalDateTime.now());
 		
 		return ResponseEntity.status(status).body(err);
 	}
@@ -61,7 +63,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public ResponseEntity<StandardError> missingServletRequestParameter(MissingServletRequestParameterException e, HttpServletRequest request) {
 		final HttpStatus status = HttpStatus.BAD_REQUEST;
-		StandardError err = new StandardError(status.value(), e.getMessage(), System.currentTimeMillis());
+		StandardError err = new StandardError(status.value(), e.getMessage(), LocalDateTime.now());
 		
 		return ResponseEntity.status(status).body(err);
 	}
@@ -69,7 +71,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(ServiceUnavaliableException.class)
 	public ResponseEntity<StandardError> serviceUnavaliable(ServiceUnavaliableException e, HttpServletRequest request) {
 		final HttpStatus status = HttpStatus.SERVICE_UNAVAILABLE;
-		StandardError err = new StandardError(status.value(), e.getMessage(), System.currentTimeMillis());
+		StandardError err = new StandardError(status.value(), e.getMessage(), LocalDateTime.now());
 		
 		return ResponseEntity.status(status).body(err);
 	}

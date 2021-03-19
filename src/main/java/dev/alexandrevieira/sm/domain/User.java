@@ -29,7 +29,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import dev.alexandrevieira.sm.domain.enums.Profile;
 
@@ -53,7 +54,7 @@ public class User implements Serializable, UserDetails {
 	private String email;
 	
 	@Column(nullable = false)
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
 	@ElementCollection(fetch = FetchType.EAGER)

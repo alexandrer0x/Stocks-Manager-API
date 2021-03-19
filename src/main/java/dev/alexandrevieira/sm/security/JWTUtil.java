@@ -27,8 +27,6 @@ public class JWTUtil {
 				.claim("authorities", user.getAuthorities())
 				.compact();
 		
-		System.out.println(user.getAuthorities());
-		
 		return "Bearer " + token;
 	}
 	

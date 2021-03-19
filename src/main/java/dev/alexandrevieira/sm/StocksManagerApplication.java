@@ -31,16 +31,12 @@ public class StocksManagerApplication implements CommandLineRunner {
 	private void loadCompanies() {
 		List<Stock> stocks = finnhubService.loadCompanies();
 		
-		stockService.insert(stocks);
-		
 		try {
 			stocks = finnhubService.getCompaniesData(stocks);
+			stockService.insert(stocks);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		stockService.insert(stocks);
-		
 	}
 }

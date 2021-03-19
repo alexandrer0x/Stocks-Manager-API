@@ -166,7 +166,13 @@ public class FinnhubService {
 		System.out.println("Sucesso: " + sucesso.size());
 		
 		
-		System.out.println(Arrays.toString(sucesso.toArray()));
+		StringBuilder sb = new StringBuilder();
+		
+		for(String e : erros) {
+			sb.append(String.format("%S\n", e));
+		}
+		
+		System.out.println(sb.toString());
 		
 		return sucesso;
 	}

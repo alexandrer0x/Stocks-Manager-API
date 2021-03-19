@@ -7,7 +7,8 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import dev.alexandrevieira.sm.domain.User;
 
@@ -22,11 +23,11 @@ public class UserNewDTO implements Serializable {
 	private String firstName;
 
 	@NotEmpty(message = "Preenchimento obrigatório")
-	private String lasName;
+	private String lastName;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Length(min = 6, max = 20, message = "O tamanho deve ser entre 6 e 20 caracteres")
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
 	public UserNewDTO() {
@@ -36,7 +37,8 @@ public class UserNewDTO implements Serializable {
 	public UserNewDTO(User user) {
 		this.email = user.getUsername();
 		this.firstName = user.getFirstName();
-		this.lasName = user.getLastName();
+		this.lastName = user.getLastName();
+		this.password = user.getPassword();
 	}
 	
 	public String getEmail() {
@@ -55,12 +57,12 @@ public class UserNewDTO implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public String getLasName() {
-		return lasName;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLasName(String lasName) {
-		this.lasName = lasName;
+	public void setLastName(String lasName) {
+		this.lastName = lasName;
 	}
 
 	public String getPassword() {
@@ -70,6 +72,4 @@ public class UserNewDTO implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	
 }

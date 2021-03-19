@@ -1,15 +1,16 @@
 package dev.alexandrevieira.sm.resources.exceptions;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer status;
 	private String msg;
-	private Long timestamp;
+	private LocalDateTime timestamp;
 
-	public StandardError(Integer status, String msg, Long timestamp) {
+	public StandardError(Integer status, String msg, LocalDateTime timestamp) {
 		super();
 		this.status = status;
 		this.msg = msg;
@@ -32,11 +33,11 @@ public class StandardError implements Serializable {
 		this.msg = msg;
 	}
 
-	public Long getTimestamp() {
-		return timestamp;
+	public String getTimestamp() {
+		return timestamp.toString();
 	}
 
-	public void setTimestamp(Long timestamp) {
+	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 
