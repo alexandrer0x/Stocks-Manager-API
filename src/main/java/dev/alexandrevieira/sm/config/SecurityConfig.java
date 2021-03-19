@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	};
 
 	private static final String[] PUBLIC_MATCHERS_POST = {
-			"/api/usuers"
+			"/api/users"
 	};
 
 	@Override
@@ -78,4 +78,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+	public static String[] getPublicMatchers() {
+		return PUBLIC_MATCHERS.clone();
+	}
+
+	public static String[] getPublicMatchersGet() {
+		return PUBLIC_MATCHERS_GET.clone();
+	}
+
+	public static String[] getPublicMatchersPost() {
+		return PUBLIC_MATCHERS_POST.clone();
+	}
+	
+	
 }

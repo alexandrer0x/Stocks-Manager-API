@@ -1,6 +1,9 @@
 package dev.alexandrevieira.sm.security;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,6 +21,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dev.alexandrevieira.sm.config.SecurityConfig;
 import dev.alexandrevieira.sm.resources.exceptions.StandardError;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -44,7 +48,50 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		
 		if(header == null || !header.startsWith(prefix)) {
 			//se nao tiver o header || se nao estiver no formato esperado
-			setResponse(response, HttpStatus.UNAUTHORIZED, "Usuário não autenticado");
+			
+			String path = request.getRequestURI();
+			String method = request.getMethod();
+			boolean authorized = false;
+			List<String> matchers;
+			
+			switch(method) {
+			
+				case "GET":
+					matchers = Arrays.asList(SecurityConfig.getPublicMatchersGet());
+					
+					
+					if(matchers.contains(path)) {
+						authorized = true;
+					}
+					
+					break;
+					
+				case "POST":
+					matchers = Arrays.asList(SecurityConfig.getPublicMatchersPost());
+					
+					if(matchers.contains(path)) {
+						authorized = true;
+					}
+					
+					break;
+					
+						
+				default:
+					matchers = Arrays.asList(SecurityConfig.getPublicMatchers());
+					
+					if(matchers.contains(path)) {
+						authorized = true;
+					}
+					
+					break;
+			}
+			
+			if(!authorized) {
+				setResponse(response, HttpStatus.UNAUTHORIZED, "Usuário não autenticado");
+			}
+			else {
+				chain.doFilter(request, response);
+			}
 		}
 		else {
 			//se estivear no formato esperado
@@ -62,7 +109,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	}
 	
 	private void setResponse(HttpServletResponse response, HttpStatus status, String msg) throws JsonProcessingException, IOException {
-		StandardError err = new StandardError(status.value(), msg, System.currentTimeMillis());
+		StandardError err = new StandardError(status.value(), msg, LocalDateTime.now());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		

@@ -15,6 +15,7 @@ import dev.alexandrevieira.sm.domain.User;
 import dev.alexandrevieira.sm.dto.UserNewDTO;
 import dev.alexandrevieira.sm.repositories.UserRepository;
 import dev.alexandrevieira.sm.services.exceptions.AuthorizationException;
+import dev.alexandrevieira.sm.services.exceptions.DuplicateEntryException;
 import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -27,6 +28,9 @@ public class UserService {
 	
 	@Autowired
 	private AuthService authService;
+	
+	@Autowired
+	private StockService stockService;
 	
 	
 	public List<User> findaAll() {
@@ -63,6 +67,12 @@ public class UserService {
 	}
 	
 	public User insert(User user) {
+		Optional<User> opt = repository.findByEmailIgnoreCase(user.getEmail());
+		
+		if(opt.isPresent()) {
+			throw new DuplicateEntryException(String.format("E-mail '%s' já cadastrado.", user.getEmail()));
+		}
+		
 		user.setId(null);
 		return repository.save(user);
 	}
@@ -89,8 +99,44 @@ public class UserService {
 		return response;
 	}
 	
+	public void insertFavorite(String userEmail, String stockTicker) {
+		User user = findByEmail(userEmail);
+		Long id = user.getId();
+		
+		if(!authService.isAdmin() && !authService.isTheUser(id)) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Stock stock = stockService.find(stockTicker);
+		
+		user.getFavoriteStocks().add(stock);
+		repository.save(user);
+	}
+	
+	public void deleteFavorite(String userEmail, String stockTicker) {
+		User user = findByEmail(userEmail);
+		Long id = user.getId();
+		
+		if(!authService.isAdmin() && !authService.isTheUser(id)) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Stock stock = stockService.find(stockTicker);
+		
+		if(user.getFavoriteStocks().contains(stock)) {
+			user.getFavoriteStocks().remove(stock);
+
+			repository.save(user);
+		}
+		else {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Email: " + userEmail + ", Stock: " + stockTicker);
+		}
+		
+	}
+	
 	public User fromDTO(UserNewDTO objDTO) {
-		User user = new User(null, objDTO.getFirstName(), objDTO.getLasName(), objDTO.getEmail(), passwordEncoder.encode(objDTO.getPassword()));
+		User user = new User(null, objDTO.getFirstName(), objDTO.getLastName(), objDTO.getEmail(), passwordEncoder.encode(objDTO.getPassword()));
 		
 		return user;
 	}
@@ -105,6 +151,8 @@ public class UserService {
 		
 		return userId;
 	}
+
 	
+
 	
 }
