@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import dev.alexandrevieira.sm.services.exceptions.AuthorizationException;
+import dev.alexandrevieira.sm.services.exceptions.BusinessRuleException;
 import dev.alexandrevieira.sm.services.exceptions.DuplicateEntryException;
+import dev.alexandrevieira.sm.services.exceptions.NegativePositionException;
 import dev.alexandrevieira.sm.services.exceptions.ObjectNotFoundException;
 import dev.alexandrevieira.sm.services.exceptions.ServiceUnavaliableException;
+import dev.alexandrevieira.sm.services.exceptions.TradeTypeInvalidException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -71,6 +74,30 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(ServiceUnavaliableException.class)
 	public ResponseEntity<StandardError> serviceUnavaliable(ServiceUnavaliableException e, HttpServletRequest request) {
 		final HttpStatus status = HttpStatus.SERVICE_UNAVAILABLE;
+		StandardError err = new StandardError(status.value(), e.getMessage(), LocalDateTime.now());
+		
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(NegativePositionException.class)
+	public ResponseEntity<StandardError> negativePosition(NegativePositionException e, HttpServletRequest request) {
+		final HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError err = new StandardError(status.value(), e.getMessage(), LocalDateTime.now());
+		
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(TradeTypeInvalidException.class)
+	public ResponseEntity<StandardError> tradeTypeInvalid(TradeTypeInvalidException e, HttpServletRequest request) {
+		final HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError err = new StandardError(status.value(), e.getMessage(), LocalDateTime.now());
+		
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(BusinessRuleException.class)
+	public ResponseEntity<StandardError> businessRule(BusinessRuleException e, HttpServletRequest request) {
+		final HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(status.value(), e.getMessage(), LocalDateTime.now());
 		
 		return ResponseEntity.status(status).body(err);

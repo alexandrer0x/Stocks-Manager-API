@@ -1,8 +1,8 @@
 package dev.alexandrevieira.sm.domain.enums;
 
 public enum TradeType {
-	COMPRA(1, "Compra"),
-	VENDA(2, "Venda");
+	COMPRA(0, "Compra"),
+	VENDA(1, "Venda");
 	
 	private int cod;
 	private String description;

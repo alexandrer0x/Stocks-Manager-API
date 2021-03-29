@@ -23,11 +23,11 @@ public class Position implements Serializable {
 		
 	}
 
-	public Position(User user, Broker broker, Stock stock, int amount, double avgPrice) {
+	public Position(User user, Broker broker, Stock stock, int amount, double averageCost) {
 		super();
 		this.id = new PositionPK(user, broker, stock);
 		this.amount = amount;
-		this.averageCost = avgPrice;
+		this.averageCost = averageCost;
 	}
 
 

@@ -1,7 +1,7 @@
 package dev.alexandrevieira.sm.domain;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.springframework.data.util.Pair;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import dev.alexandrevieira.sm.domain.enums.TradeType;
 
@@ -28,7 +32,7 @@ public class PositionTrade implements Serializable {
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id")
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private User user;
 	
 	@ManyToOne(optional = false)
@@ -40,7 +44,8 @@ public class PositionTrade implements Serializable {
 	private Broker broker;
 	
 	@Column(nullable=false)
-	private LocalDateTime date;
+	private LocalDate date;
+	
 	
 	private int amount;
 	
@@ -54,11 +59,11 @@ public class PositionTrade implements Serializable {
 		
 	}
 
-	public PositionTrade(Long id, TradeType type, User user, Stock stock, Broker broker, LocalDateTime date, int amount,
+	public PositionTrade(Long id, Integer type, User user, Stock stock, Broker broker, LocalDate date, int amount,
 			double price, double tradeFee, Double tradeResult) {
 		super();
 		this.id = id;
-		this.type = type.getCod();
+		this.type = type;
 		this.user = user;
 		this.stock = stock;
 		this.broker = broker;
@@ -111,11 +116,11 @@ public class PositionTrade implements Serializable {
 		this.broker = broker;
 	}
 
-	public LocalDateTime getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
@@ -150,7 +155,42 @@ public class PositionTrade implements Serializable {
 	public void setTradeResult(Double tradeResult) {
 		this.tradeResult = tradeResult;
 	}
-
+	
+	@JsonIgnore
+	public double getTotalCost() {
+		return this.amount * this.price + this.tradeFee;
+	}
+	
+	@JsonIgnore
+	public Pair<Boolean, String> isValid() {
+		if(this.amount <= 0) 
+			return Pair.of(false, "Quantidade");
+		
+		if(this.broker == null)
+			return Pair.of(false, "Corretora");
+		
+		if(this.date == null || this.date.isAfter(LocalDate.now()))
+			return Pair.of(false, "Data");
+		
+		if(this.price <= 0)
+			return Pair.of(false, "Preço");
+		
+		if(this.stock == null)
+			return Pair.of(false, "Ação");
+		
+		if(this.tradeFee < 0)
+			return Pair.of(false, "Corretagem");
+		
+		if(TradeType.toEnum(this.type) == null)
+			return Pair.of(false, "Tipo");;
+		
+		if(this.user == null)
+			return Pair.of(false, "Usuário");;
+		
+		return Pair.of(true, "");
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

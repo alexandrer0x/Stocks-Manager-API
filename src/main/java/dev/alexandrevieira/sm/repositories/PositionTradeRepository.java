@@ -11,7 +11,9 @@ import dev.alexandrevieira.sm.domain.PositionTrade;
 
 @Repository
 public interface PositionTradeRepository extends JpaRepository<PositionTrade, Long> {
-	public List<PositionTrade> findAllByUserEmail(String userEmail);
+	public List<PositionTrade> findAllByUserEmailOrderByDateAscTypeAsc(String userEmail);
+	
+	public List<PositionTrade> findAllByUserEmailAndStockTickerOrderByDateAscTypeAsc(String userEmail, String stockTicker);
 	
 	public Page<PositionTrade> findAllByUserEmail(String userEmail, Pageable pageable);
 }
